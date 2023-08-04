@@ -7,12 +7,12 @@ const Gallery = ({ items }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
       {items.map((item, index) => (
-        <div className='bg-blue-300 rounded-xl m-4 py-5 px-2 border-2' 
+        <div className='bg-blue-300 rounded-xl m-4 py-5 px-2 border-2 hover:scale-110 duration-300 ' 
         onClick={() => {
            router.push(`Events/${item.title}`)
         }}
         >
-        <div key={index} className=" bg-yellow-500 rounded-lg shadow-md  cursor-pointer mx-2  ">
+        <div key={index} className=" bg-yellow-500 rounded-lg shadow-md  cursor-pointer mx-2 hover:scale-100 duration-300">
           <img src={item.image} alt={item.title} className="w-full h-full object-cover mb-2 rounded-md" />
           
         </div>

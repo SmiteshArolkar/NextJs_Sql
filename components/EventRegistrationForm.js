@@ -25,17 +25,17 @@ const EventRegistrationForm = ({EventID}) => {
     <div className=" flex items-center justify-center">
         
       <div className="w-full max-w-3xl ">
-      <div className='text-center text-3xl font-extrabold  m-3 pb-24'>
+      <div className='text-center text-3xl font-extrabold m-3 pb-20 my-10'>
       EVENT REQUEST FORM 
       </div>
-      <div className='border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-blue-200'>
+      <div className='border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-blue-200 hover:scale-125 duration-300'>
         <div className="mb-6 ">
         <div className='text-center font-bold text-2xl mb-10'>
           {EventID} Request Registration
         </div>
           <h2 className="text-2xl font-semibold mb-2">{steps[activeStep].label}</h2>
           <div className="relative w-full">
-            <div className="h-1 bg-red-500 rounded-full"></div>
+            <div className="h-1 bg-white rounded-full"></div>
             <div className="absolute top-0 left-0 h-1 bg-green-300 rounded-full" style={{ width: `${(activeStep + 1) * (100 / steps.length)}%` }}></div>
           </div>
         </div>

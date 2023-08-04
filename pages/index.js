@@ -37,9 +37,11 @@ const Index = () => {
     <div>
       {currentUser ? <div>Hello {currentUser.email}</div> : <></>}
       <div className="container mx-auto py-8">
-        <h1 className="text-2xl font-semibold mb-4">
-          Events
+        <h1 className="text-3xl font-semibold mb-4 text-center my-10 ">
+          EVENT SERVICES
+          <div className="border-t border-gray-400 my-3"></div>
         </h1>
+        
         <Gallery items={galleryItems} />
       </div>
     </div>
