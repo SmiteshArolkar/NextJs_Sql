@@ -14,16 +14,6 @@ const Index = () => {
       image: "/Landscape-Color.jpg",
     },
     {
-      title: "Item 1",
-      description: "Description for Item 1",
-      image: "/Landscape-Color.jpg",
-    },
-    {
-      title: "Item 1",
-      description: "Description for Item 1",
-      image: "/Landscape-Color.jpg",
-    },
-    {
       title: "Item 2",
       description: "Description for Item 2",
       image: "/Landscape-Color.jpg",
@@ -45,10 +35,10 @@ const Index = () => {
   }, []);
   return (
     <div>
-      {currentUser ? <div>Hello {currentUser.email}</div> : <>Login Required</>}
+      {currentUser ? <div>Hello {currentUser.email}</div> : <></>}
       <div className="container mx-auto py-8">
         <h1 className="text-2xl font-semibold mb-4">
-          Events 
+          Events
         </h1>
         <Gallery items={galleryItems} />
       </div>

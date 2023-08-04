@@ -24,14 +24,14 @@ const EventRegistrationForm = ({EventID}) => {
   return (
     <div className=" flex items-center justify-center">
         
-      <div className="w-full max-w-md ">
+      <div className="w-full max-w-3xl ">
       <div className='text-center text-3xl font-extrabold  m-3 pb-24'>
       EVENT REQUEST FORM 
       </div>
-      <div className='border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl'>
+      <div className='border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-blue-200'>
         <div className="mb-6 ">
         <div className='text-center font-bold text-2xl mb-10'>
-          {EventID}
+          {EventID} Request Registration
         </div>
           <h2 className="text-2xl font-semibold mb-2">{steps[activeStep].label}</h2>
           <div className="relative w-full">

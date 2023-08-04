@@ -1,18 +1,18 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setLogin] = useState(false);
-
-  const route = useRouter().asPath
+  const [isLoggedIn, setLogin] = useState(true);
+  const router = useRouter()
+  const route = router.asPath
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="bg-red-500 p-4">
+    <nav className="bg-red-500 p-4 fixed top-0 left-0 w-full  z-10">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -24,7 +24,8 @@ const Navbar = () => {
             {isLoggedIn ? (
               <>
                 <div>
-                  <Link className="  " href="">
+                  <Link className="  " href="/Settings">
+                    {/*setting*/}
                     <svg
                       className="mx-auto hover:rotate-90   duration-100 hover:scale-125"
                       xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +38,8 @@ const Navbar = () => {
                 </div>
 
                 <div>
-                  <Link href="">
+                  <Link href="/Cart">
+                    {/*cart*/}
                     <svg
                       className="mx-auto hover:scale-125 duration-100"
                       xmlns="http://www.w3.org/2000/svg"
@@ -48,29 +50,44 @@ const Navbar = () => {
                     </svg>
                   </Link>
                 </div>
-              </>
-            ) :(
+
+
                 <div>
-                    {
-                        route != "/Login" ? <div>
-                            <Link className="" href="/Login">
-                        <div className=" hover:scale-125  text-white duration-150 font-bold p-2 rounded-xl">
-                          <span>Login / Register </span>
-                        </div>
-                      </Link>
-                        </div>
-                        : <div>
-                            <Link className="" href="/">
-                        <div className=" hover:scale-125  text-white duration-150 font-bold p-2 rounded-xl">
-                          <span>HOME</span>
-                        </div>
-                      </Link>
-                        </div>
-                        
-                    }
+                  <Link href="/">
+                    <svg
+                    className="mx-auto hover:scale-125 duration-100"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1.4em"
+                      viewBox="0 0 576 512"
+                     
+                    >
+                      <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
+                    </svg>
+                  </Link>
                 </div>
-            )
-                }
+                
+              </>
+            ) : (
+              <div>
+                {route != "/Login" ? (
+                  <div>
+                    <Link className="" href="/Login">
+                      <div className=" hover:scale-125  text-white duration-150 font-bold p-2 rounded-xl">
+                        <span>Login / Register </span>
+                      </div>
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    <Link className="" href="/">
+                      <div className=" hover:scale-125  text-white duration-150 font-bold p-2 rounded-xl">
+                        <span>HOME</span>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="md:hidden">

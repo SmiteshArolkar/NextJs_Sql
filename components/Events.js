@@ -7,7 +7,7 @@ const Gallery = ({ items }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
       {items.map((item, index) => (
-        <div className='bg-yellow-300 rounded-xl m-4 py-5 px-2 border-2' 
+        <div className='bg-blue-300 rounded-xl m-4 py-5 px-2 border-2' 
         onClick={() => {
            router.push(`Events/${item.title}`)
         }}
