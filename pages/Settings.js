@@ -56,7 +56,8 @@ const Settings = () => {
           <label className="block font-semibold mb-2">Email</label>
           <input
             type="email"
-            className="border rounded p-2 w-full border-red-300 bg-red-100 active:scale-125  duration-700"
+            className="border rounded p-2 w-full border-red-300 bg-red-100 active:scale-125  duration-700 " 
+            disabled="true"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
