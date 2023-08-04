@@ -1,68 +1,59 @@
-import RenderData from '@/components/RenderData';
-import axios from 'axios';
-
-
-import React from 'react';
-import { useState } from 'react';
+import { AuthContext } from "@/Context/AuthContext";
+import Gallery from "@/components/Events";
+import React from "react";
+import { useEffect } from "react";
+import { useContext } from "react";
 
 const Index = () => {
- const [data,setData] = useState([])
-  const handleClick = () => {
-    const name = document.getElementById("name").value
-    const id = document.getElementById("id").value
+  const { currentUser } = useContext(AuthContext);
 
-    const data = {
-      id:id,
-      name : name,
+  const galleryItems = [
+    {
+      title: "Item 1",
+      description: "Description for Item 1",
+      image: "/Landscape-Color.jpg",
+    },
+    {
+      title: "Item 1",
+      description: "Description for Item 1",
+      image: "/Landscape-Color.jpg",
+    },
+    {
+      title: "Item 1",
+      description: "Description for Item 1",
+      image: "/Landscape-Color.jpg",
+    },
+    {
+      title: "Item 2",
+      description: "Description for Item 2",
+      image: "/Landscape-Color.jpg",
+    },
+    {
+      title: "Item 3",
+      description: "Description for Item 3",
+      image: "/Landscape-Color.jpg",
+    },
+    // Add more items as needed
+  ];
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log(currentUser);
+    } else {
+      console.log("No Current User");
     }
-    axios.post("/api/practice/dummy",data).then((Response) => {
-      console.log(Response)
-      
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-
-  const handleGetData = () => {
-    const docs = []
-    axios.get("api/getData/getData").then(function(Response){
-      console.log(Response)
-      console.log(Response.data.data)
-      
-      Response.data.data.forEach((doc) => {
-        docs.push(doc)
-      })
-      setData(docs)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }
+  }, []);
   return (
-    
     <div>
-
-      <div className='grid text-center text-white'>
-      <input  id= "name" type='name' placeholder='name' className='rounded m-4 text-center border-2 bg-inherit'></input>
-      <input id= "id" type='number' placeholder='id' className='rounded m-4 text-center border-2 bg-inherit'></input>
-      <button onClick={handleClick} className='border-2 w-max mx-auto p-3 rounded-xl text-white'>Send Data</button>
-      </div>
-  <div className='text-center my-6'>
-  <button onClick={handleGetData} className='border-2  mx-auto p-3 rounded-xl w-1/2 text-center text-white'>Get Data</button>
-  </div>
-      
-      <div className='grid'>
-        {
-          data && data.map((data) => {
-            return(
-              <RenderData data={data} key={data.id} />
-            )
-          })
-        }
+      {currentUser ? <div>Hello {currentUser.email}</div> : <>Login Required</>}
+      <div className="container mx-auto py-8">
+        <h1 className="text-2xl font-semibold mb-4">
+          Events 
+        </h1>
+        <Gallery items={galleryItems} />
       </div>
     </div>
-    
   );
-}
+};
 
 export default Index;

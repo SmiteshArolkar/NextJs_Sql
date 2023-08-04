@@ -4,7 +4,7 @@ import serverlessMysql from "serverless-mysql";
 export const db = serverlessMysql({
     config: {
         host: 'localhost',
-        database:'shoes',
+        database:'event management',
         user:'root'
     }
 });
