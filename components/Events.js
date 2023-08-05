@@ -1,9 +1,8 @@
 
-import { useRouter } from 'next/router';
 import React from 'react';
 
 const Gallery = ({ items }) => {
-    const router = useRouter()
+    
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
       {items.map((item, index) => (

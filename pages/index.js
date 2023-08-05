@@ -6,7 +6,8 @@ import { useEffect } from "react";
 import { useContext } from "react";
 
 const Index = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser,currentRole,setRole } = useContext(AuthContext);
+
 
   
   const galleryItems = [
@@ -29,17 +30,16 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    if (currentUser) {
-      console.log(currentUser);
-    } else {
-      console.log("No Current User");
-    }
-  }, []);
+    
+    
+   
+  }, [currentUser]);
   return (
     <div>
       
       <div className="container mx-auto py-8">
-      {currentUser ? <div>Hello {currentUser.email}</div> : <></>}
+        {currentRole ? <div>hello {currentRole}</div>:<div>No Role</div>}
+      {currentUser ? <div>Hello {currentUser.email}</div> : <>No Login</>}
         <h1 className="text-3xl font-semibold mb-4 text-center my-10 ">
           EVENT SERVICES
           <div className="border-t border-gray-400 my-3"></div>
