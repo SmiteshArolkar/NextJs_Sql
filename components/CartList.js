@@ -15,6 +15,9 @@ const CartList = () => {
     } else if (activeTab === "approved") {
       setFilteredItems(cartItems.filter((item) => item.status === "approved"));
     }
+    else if (activeTab === "accepted") {
+      setFilteredItems(cartItems.filter((item) => item.status === "accepted"));
+    }
 
     return () => {};
   }, [activeTab]);
@@ -56,6 +59,12 @@ const CartList = () => {
       quantity: 1,
       status: "approved",
     },
+    {
+      id: 7,
+      name: "Product 6",
+      quantity: 1,
+      status: "accepted",
+    },
     // Add more items
   ];
 
@@ -89,6 +98,20 @@ const CartList = () => {
         >
           Approved Request
         </button>
+        <div className="border-r border-gray-300 mr-3"></div>
+        <button
+          className={`mr-4 ${
+            activeTab === "accepted"
+              ? "text-red-300 font-bold "
+              : "text-gray-500"
+          }`}
+          onClick={() => {
+            setFilteredItems([]);
+            handleTabChange("accepted");
+          }}
+        >
+          Accepted Requests
+        </button>
       </div>
       <div className="border-t border-gray-300 mb-8"></div>
 
@@ -111,10 +134,29 @@ const CartList = () => {
                     Cancel Request
                   </button>
                 </div>
-              ) : (
+              ) :
+              item.status === "approved" ? 
+              (
                 <>
                   <div className="border-2 rounded-xl p-2 bg-yellow-200 shadow flex gap-2 justify-between">
                     Supplier Details
+                    <div>
+                      <input
+                        placeholder="message"
+                        type="text"
+                        className="p-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-10/12 hover:-translate-x-12 duration-300"
+                      ></input>
+                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 ">
+                        Send message
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ):
+              (
+                <>
+                  <div className="border-2 rounded-xl p-2 bg-yellow-200 shadow flex gap-2 justify-between">
+                    User Details
                     <div>
                       <input
                         placeholder="message"
@@ -127,7 +169,8 @@ const CartList = () => {
                     </div>
                   </div>
                 </>
-              )}
+              )
+              }
             </div>
           </div>
         ))}

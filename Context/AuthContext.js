@@ -4,41 +4,52 @@ const { createContext, useState, useEffect } = require("react");
 
 export const AuthContext = createContext();
 
-export  function AuthProvider({ children })
-{
-    const [currentUser,setCurrentUser] = useState(null)
-    const [currentRole,setRole] = useState("")
-    const [loading,setLoading] = useState(null)
+export function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentRole, setRole] = useState("");
+  const [loading, setLoading] = useState(null);
 
-    useEffect(()=>{
-      supabase.auth.onAuthStateChange((event,session) =>{
-        setCurrentUser(session?.user || null)
-      })
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      setCurrentUser(session?.user || null);
+    });
 
-      return (()=>{
+    return () => {};
+  }, []);
 
-      })
-    },[])
-
-    return (
-        <AuthContext.Provider value={{  currentUser  }}>
-          {children}
-        </AuthContext.Provider>
-      );
+  return (
+    <AuthContext.Provider value={{ currentUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
-export const SignIn = async (email,password) => {
-    const {data , error} = await supabase.auth.signInWithPassword({email:email,password:password})
-    if(error)
-    {
-        console.log(" Auth Error : " , error.message)
-    }
-}
+export const SignIn = async (email) => {
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email: email,
+    options: {
+      shouldCreateUser: false,
+    },
 
+  });
+  if (error) {
+    console.log(" Auth Error : ", error.message);
+    return error.message;
+  }
+};
 export const SignOut = async () => {
-    await supabase.auth.signOut();
-}
+  await supabase.auth.signOut();
+};
 
-export const SignUp = async (email,password) => {
-    const {error} = await supabase.auth.signUp({email:email,password:password})
-}
+export const SignUp = async (email) => {
+  const { error } = await supabase.auth.signInWithOtp({
+    email:email
+  })
+  if(error)
+  {
+    console.log(error.message)
+    throw error
+  }
+};
+
+
