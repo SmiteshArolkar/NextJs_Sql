@@ -1,4 +1,7 @@
+import { AuthContext } from '@/Context/AuthContext';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
 
 const Settings = () => {
   const [name, setName] = useState('John Doe');
@@ -7,14 +10,20 @@ const Settings = () => {
   const [address, setAddress] = useState('123 Main St');
   const [city, setCity] = useState('City');
   const [state, setState] = useState('State');
-  const Userdata = {
-    name:"Name",
-    phoneNumber:"Phone Number",
-    email:"Email",
-    address:"Address",
-    city:"City",
-    state:"State"
-  }
+
+  const {userDetails} = useContext(AuthContext)
+
+  useEffect(()=>{
+    if(userDetails){
+      setName(userDetails.name)
+      setPhoneNumber(userDetails.phone)
+      setEmail(userDetails.email)
+      setAddress(userDetails.address)
+      setCity(userDetails.city)
+      setState(userDetails.state)
+    }
+  },[])
+  
 
   const handleSave = () => {
     // Perform actions to save the updated settings

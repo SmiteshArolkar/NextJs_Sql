@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   const [currentRole, setRole] = useState("");
   const [loading, setLoading] = useState(null);
   const [userEmail,setUserEmail] = useState('')
+  const [userDetails,setUserDetails] = useState(null)
 
   useEffect(() => {
     
@@ -50,6 +51,8 @@ export function AuthProvider({ children }) {
         .then((response) => {
           console.log(response)
           setRole(response.data.data[0].role);
+          console.log(response.data.data[0])
+          setUserDetails(response.data.data[0])
         })
         .catch((error) => {
           console.log(error);
@@ -57,8 +60,13 @@ export function AuthProvider({ children }) {
     }
   },[userEmail])
 
+  useEffect(() => {
+    console.log(userDetails);
+  }, [userDetails]);
+  
+
   return (
-    <AuthContext.Provider value={{ currentUser, currentRole }}>
+    <AuthContext.Provider value={{ currentUser, currentRole , userDetails}}>
       {children}
     </AuthContext.Provider>
   );
