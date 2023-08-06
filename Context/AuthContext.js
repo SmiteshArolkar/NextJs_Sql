@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
 
     supabase.auth.onAuthStateChange((event, session) => {
       setCurrentUser(session?.user || null);
-     console.log(session.user.email)
+      if(session)
       setUserEmail(session.user.email)
       
     //  if (session.user) {

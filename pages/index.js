@@ -12,9 +12,9 @@ const Index = () => {
   
   const galleryItems = [
     {
-      title: "Item 1",
-      description: "Description for Item 1",
-      image: "/Landscape-Color.jpg",
+      title: "BirthDay",
+      description: "Request A Service to organize Birthdays for your loved ones",
+      image: "/birthday.jpg",
     },
     {
       title: "Item 2",
