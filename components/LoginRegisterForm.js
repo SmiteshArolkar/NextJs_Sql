@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Loader from "./Loader";
 import Error from "./Error";
-import { AuthContext, SignIn, SignUp } from "@/Context/AuthContext";
+import { AuthContext, SignIn, SignInWithPass, SignUp } from "@/Context/AuthContext";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Success from "./Success";
@@ -42,13 +42,23 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    const email = document.getElementById("email").value;
-
-    console.log(email);
+    const email = document.getElementById("email").value
+    if(activeTab == "user")
+    {
+      console.log(email);
     const result = await SignIn(email);
     if (result) setError(result);
     else 
     setSuccess("Email Sent Successfully")
+    }
+    else
+     {
+      const password = document.getElementById("password").value
+      const result = await SignInWithPass(email,password)
+      if(result) setError(result)
+      else  setSuccess("Login Successfully Return to home")
+     }
+    
     setLoading(false)
   };
 
@@ -60,8 +70,12 @@ const LoginForm = () => {
     const city = document.getElementById("city").value;
     const state = document.getElementById("state").value;
     const address = document.getElementById("address").value;
+    const password = document.getElementById("password").value
 
-    if (email && name && phone && city && state && address) {
+    console.log(email,name,phone,city,state,address,password)
+    setLoading(true)
+    if (email && name && phone && city && state && address && password) {
+      
       const data = {
         email: email,
         phone: phone,
@@ -73,7 +87,7 @@ const LoginForm = () => {
       };
       console.log(data)
       
-       SignUp(email).then((result) => {
+       SignUp(email,password).then((result) => {
         console.log(result)
         
         axios.post("/api/registerUser",data).then((response) => {
@@ -81,6 +95,7 @@ const LoginForm = () => {
           if(response.data.status === "success"){
             
             setLoading(false)
+            setSuccess("User Registered Successfully")
             router.reload()
           }
           else
@@ -154,7 +169,7 @@ const LoginForm = () => {
               <input
                 type="password"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="example@exp.com"
+                placeholder="*******"
                 id="password"
               />
                 </div> : <></>
@@ -220,7 +235,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="email"
-                  className="appearance-none border-black border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border-gray-400 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Email"
                   id="email"
                 />
@@ -232,20 +247,20 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="password"
-                  className="appearance-none border  border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border  border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="*********"
-                  id="email"
+                  id="password"
                 />
               </div>
               
 
               <div className="mb-4">
-                <label className="block text-gray-700  border-black text-sm font-bold mb-2">
+                <label className="block text-gray-700  border-gray-400 text-sm font-bold mb-2">
                   Name
                 </label>
                 <input
                   type="name"
-                  className="appearance-none border rounded w-full  border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full  border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="name"
                   id="name"
                 />
@@ -257,7 +272,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="number"
-                  className="appearance-none border rounded w-full  border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full  border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Phone Number"
                   id="phone"
                 />
@@ -269,7 +284,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="text"
-                  className="appearance-none border rounded w-full border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="city"
                   id="city"
                 />
@@ -281,7 +296,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="text"
-                  className="appearance-none border rounded w-full border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="state"
                   id="state"
                 />
@@ -292,7 +307,7 @@ const LoginForm = () => {
                   Address
                 </label>
                 <textarea
-                  className="appearance-none border rounded w-full py-2 border-black px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 border-gray-400 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Address"
                   rows="3"
                   id="address"
@@ -300,7 +315,7 @@ const LoginForm = () => {
               </div>
               <div className="flex items-center gap-20 ">
                 <button
-                  className="bg-green-900 hover:bg-green-700 text-white border-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-green-900 hover:bg-green-700 text-white border-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                   onClick={handleRegister}
                 >
@@ -311,12 +326,11 @@ const LoginForm = () => {
                 {isLoading && <Loader></Loader>}
               </div>
               <div className="m-2 font-semibold">
-                <h1>
-                  *confirmation mail will be sent on the above email
-                </h1>
+               
               </div>
             </form>
             {error && <Error message={error}></Error>}
+            {isSuccess && <Success message={isSuccess}></Success>}
             <button
               className="m-2 "
               onClick={() => {

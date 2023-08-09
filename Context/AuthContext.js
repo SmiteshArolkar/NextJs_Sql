@@ -84,13 +84,26 @@ export const SignIn = async (email) => {
     return error.message;
   }
 };
+
+export const SignInWithPass = async (email,password) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password:password
+  });
+  if (error) {
+    console.log(" Auth Error : ", error.message);
+    return error.message;
+  }
+};
+
 export const SignOut = async () => {
   await supabase.auth.signOut();
 };
 
-export const SignUp = async (email) => {
-  const { error } = await supabase.auth.signInWithOtp({
+export const SignUp = async (email,password) => {
+  const { error } = await supabase.auth.signUp({
     email: email,
+    password:password
   });
   if (error) {
     console.log(error.message);
