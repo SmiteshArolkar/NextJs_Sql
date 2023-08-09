@@ -4,12 +4,14 @@ import Error from "./Error";
 import { AuthContext, SignIn, SignUp } from "@/Context/AuthContext";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Success from "./Success";
 const LoginForm = () => {
   const [activeTab, setActiveTab] = useState("user");
   const [Role, setRole] = useState("");
   const [Login, setLogin] = useState(true);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [isSuccess,setSuccess] = useState("")
   const router = useRouter();
 
   const validateEmail = (email) => {
@@ -43,9 +45,11 @@ const LoginForm = () => {
     const email = document.getElementById("email").value;
 
     console.log(email);
-    setLoading(false);
     const result = await SignIn(email);
     if (result) setError(result);
+    else 
+    setSuccess("Email Sent Successfully")
+    setLoading(false)
   };
 
   const handleRegister = async () => {
@@ -116,7 +120,7 @@ const LoginForm = () => {
               }`}
               onClick={() => handleTabChange("user")}
             >
-              Login as User
+              Log in with Email Link
             </button>
             <button
               className={`flex-1 p-2 text-center ${
@@ -124,7 +128,7 @@ const LoginForm = () => {
               }`}
               onClick={() => handleTabChange("admin")}
             >
-              Login as Supplier
+              Login with Password
             </button>
           </div>
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -142,6 +146,19 @@ const LoginForm = () => {
                 placeholder="example@exp.com"
                 id="email"
               />
+              {
+                activeTab == "admin" ? <div>
+                   <label className="block text-gray-700 text-sm font-bold mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="example@exp.com"
+                id="password"
+              />
+                </div> : <></>
+              }
             </div>
             <div className="flex items-center  justify-between">
               <button
@@ -149,7 +166,7 @@ const LoginForm = () => {
                 type="button" 
                 onClick={handleLogin}
               >
-                {activeTab === "user" ? "" : ""} Send OTP
+                {activeTab === "user" ? "Send Email Link" : "Login"} 
               </button>
               {isLoading && <Loader></Loader>}
               <div>
@@ -157,6 +174,7 @@ const LoginForm = () => {
             </div>
           </form>
           {error && <Error message={error}></Error>}
+          {isSuccess && <Success message={isSuccess}></Success>}
           <button
             className="m-2 "
             onClick={() => {
@@ -172,7 +190,7 @@ const LoginForm = () => {
     return (
       <div>
         <div className="flex justify-center items-center min-h-screen">
-          <div className="w-full max-w-md p-4">
+          <div className="w-1/2 p-4">
             <div className="flex mb-4">
               <button
                 className={`flex-1 p-2 text-center ${
@@ -195,14 +213,14 @@ const LoginForm = () => {
                 Supplier Registration
               </button>
             </div>
-            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form className="bg-white grid grid-cols-2 gap-4 shadow-md rounded px-8 pt-6 pb-8 mb-4">
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Email
                 </label>
                 <input
                   type="email"
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border-black border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Email"
                   id="email"
                 />
@@ -210,11 +228,24 @@ const LoginForm = () => {
 
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="appearance-none border  border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="*********"
+                  id="email"
+                />
+              </div>
+              
+
+              <div className="mb-4">
+                <label className="block text-gray-700  border-black text-sm font-bold mb-2">
                   Name
                 </label>
                 <input
                   type="name"
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full  border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="name"
                   id="name"
                 />
@@ -226,7 +257,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="number"
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full  border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Phone Number"
                   id="phone"
                 />
@@ -238,7 +269,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="text"
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="city"
                   id="city"
                 />
@@ -250,7 +281,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="text"
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full border-black py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="state"
                   id="state"
                 />
@@ -261,7 +292,7 @@ const LoginForm = () => {
                   Address
                 </label>
                 <textarea
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 border-black px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Address"
                   rows="3"
                   id="address"
@@ -269,7 +300,7 @@ const LoginForm = () => {
               </div>
               <div className="flex items-center gap-20 ">
                 <button
-                  className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-green-900 hover:bg-green-700 text-white border-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                   onClick={handleRegister}
                 >

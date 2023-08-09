@@ -1,16 +1,24 @@
-import { SignOut } from "@/Context/AuthContext";
+import { AuthContext, SignOut } from "@/Context/AuthContext";
 import Link from "next/link";
 import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
+import { useContext } from "react";
+import { useEffect } from "react";
 
 const Navbar = () => {
+ 
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setLogin] = useState(true);
+  const [isLoggedIn, setLogin] = useState(false);
   const router = useRouter();
+  const {currentUser} = useContext(AuthContext)
   const route = router.asPath;
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+   
+    if(currentUser) setLogin(true)
+  },[currentUser])
   const handleLogout = () => {
     setLogin(false);
     SignOut().then(() => {
@@ -21,6 +29,7 @@ const Navbar = () => {
     })
     
   }
+
 
   return (
     <nav className=" p-4 fixed top-0 left-0 w-full  z-10     bg-gradient-to-r bg-yellow-500 ">
@@ -121,7 +130,7 @@ const Navbar = () => {
                 {route != "/Login" ? (
                   <div>
                     <Link className="" href="/Login">
-                      <div className=" hover:scale-125  text-white duration-150 font-bold p-2 rounded-xl">
+                      <div className=" hover:scale-125  text-black duration-150 font-bold p-2 rounded-xl">
                         <span>Login / Register </span>
                       </div>
                     </Link>
