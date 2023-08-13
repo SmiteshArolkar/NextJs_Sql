@@ -19,6 +19,14 @@ const PersonalInfoStep = () => {
           placeholder="Enter your last name"
         />
       </div>
+      <div className="mb-6">
+        <label className="block text-gray-700 text-lg font-semibold mb-2  rounded-lg">Mobile Number</label>
+        <input
+          type="number"
+          className="appearance-none border rounded-lg w-full py-3 px-4 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Mobile Number"
+        />
+      </div>
     </div>
   );
 };
