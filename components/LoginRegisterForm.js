@@ -57,6 +57,7 @@ const LoginForm = () => {
       const result = await SignInWithPass(email,password)
       if(result) setError(result)
       else  setSuccess("Login Successfully Return to home")
+    router.replace("/")
      }
     
     setLoading(false)
