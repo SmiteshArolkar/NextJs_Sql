@@ -1,25 +1,68 @@
-import React, { useEffect, useState } from "react";
+import { AuthContext } from "@/Context/AuthContext";
+import { data } from "autoprefixer";
+import axios from "axios";
+import { Router, useRouter } from "next/router";
+
+import React, { useContext, useEffect, useState } from "react";
 
 const CartList = () => {
-  const [activeTab, setActiveTab] = useState("pending");
+  const [activeTab, setActiveTab] = useState("approved");
   const [filteredItems, setFilteredItems] = useState([]);
+  const [dataDocs,setData] = useState([])
+  const {userDetails} = useContext(AuthContext)
+  const router = useRouter()
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
-  useEffect(() => {
-    setFilteredItems([]);
-    if (activeTab === "pending") {
-      setFilteredItems(cartItems.filter((item) => item.status === "pending"));
-    } else if (activeTab === "approved") {
-      setFilteredItems(cartItems.filter((item) => item.status === "approved"));
-    }
-    else if (activeTab === "accepted") {
-      setFilteredItems(cartItems.filter((item) => item.status === "accepted"));
+  const handleDelete = async (requestId) => {
+    console.log(requestId);
+    const data = {
+      requestId:requestId
     }
 
-    return () => {};
+    const res = await axios.post("/api/deleteRequest",data).then((response) => {
+      console.log(response)
+      router.reload()
+      
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+    
+  }
+
+ 
+
+  useEffect(  () => {
+    if(userDetails)
+    {
+      const data = {email:userDetails.email}
+      const res =   axios.post("/api/getRequests",data).then((response) => {
+        console.log(response.data.data)
+        console.log(typeof(dataDocs))
+        const docs = []
+        response.data.data.forEach((doc) => {
+          docs.push(doc)
+        })
+        setData(docs)
+        setFilteredItems([]);
+        if (activeTab === "pending") {
+          setFilteredItems(dataDocs.filter((item) => item.status === "pending"));
+        } else if (activeTab === "approved") {
+          setFilteredItems(dataDocs.filter((item) => item.status === "approved"));
+        }
+        else if (activeTab === "accepted") {
+          setFilteredItems(dataDocs.filter((item) => item.status === "accepted"));
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+    }
+   
+
   }, [activeTab]);
 
   const cartItems = [
@@ -122,15 +165,23 @@ const CartList = () => {
             className="bg-blue-200 border-2 rounded-lg shadow-xl p-4 grid grid-cols-2 cursor-pointer"
           >
             <div>
-              <h3 className="text-gray-800 font-semibold">{item.name}</h3>
-              <p className="text-gray-600">Quantity: {item.quantity}</p>
+              <h3 className="text-gray-800 font-semibold">{item.eventid}</h3>
+
+              <p className="text-gray-600">date : {item.startdate.slice(0,10) + " to " + item.enddate.slice(0,10)}</p>
+              <p className="text-gray-600">Address: {item.address}</p>
+              <p className="text-gray-600">email: {item.email}</p>
+              
               <p className="text-gray-600">Status: {item.status}</p>
             </div>
             <div className="grid hover:scale-125 duration-300">
               {item.status === "pending" ? (
                 <div className="flex gap-2">
                   
-                  <button className="border-2 px-2 w-1/4  my-4 mx-auto py-1 m-1 bg-red-300 rounded-lg shadow-lg">
+                  <button className="border-2 px-2 w-1/4  my-4 mx-auto py-1 m-1 bg-red-300 rounded-lg shadow-lg w-max" name={item.requestid}
+                  onClick={(e) =>{
+                    handleDelete(e.target.name)
+                  }}
+                  >
                     Cancel Request
                   </button>
                 </div>
