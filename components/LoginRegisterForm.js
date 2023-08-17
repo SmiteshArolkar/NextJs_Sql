@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Loader from "./Loader";
 import Error from "./Error";
-import { AuthContext, SignIn, SignInWithPass, SignUp } from "@/Context/AuthContext";
+import { AuthContext, SignIn, SignInWithPass, SignUp, signInWithEmailPassword, signUp } from "@/Context/AuthContext";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Success from "./Success";
@@ -54,10 +54,14 @@ const LoginForm = () => {
     else
      {
       const password = document.getElementById("password").value
-      const result = await SignInWithPass(email,password)
+      const result = await signInWithEmailPassword(email,password)
+      console.log(result)
       if(result) setError(result)
-      else  setSuccess("Login Successfully Return to home")
+      else 
+    {
+      setSuccess("Login Successfully Return to home")
     router.replace("/")
+    } 
      }
     
     setLoading(false)
@@ -88,13 +92,10 @@ const LoginForm = () => {
       };
       console.log(data)
       
-       SignUp(email,password).then((result) => {
-        console.log(result)
-        
+       signUp(email,password).then((result) => {
         axios.post("/api/registerUser",data).then((response) => {
           console.log(response)
           if(response.data.status === "success"){
-            
             setLoading(false)
             setSuccess("User Registered Successfully")
             router.reload()

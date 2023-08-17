@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 
 const Index = () => {
-  const { currentUser,currentRole,setRole } = useContext(AuthContext);
+  const { currentUser} = useContext(AuthContext);
 
 
   
@@ -38,10 +38,9 @@ const Index = () => {
     <div>
       
       <div className="container mx-auto py-8">
-        {currentRole ? <div>hello {currentRole}</div>:<div>No Role</div>}
-      {currentUser ? <div>Hello {currentUser.email}</div> : <>No Login</>}
         <h1 className="text-3xl font-semibold mb-4 text-center my-10 ">
           EVENT SERVICES
+          {currentUser && currentUser.email}
           <div className="border-t border-gray-400 my-3"></div>
         </h1>
         

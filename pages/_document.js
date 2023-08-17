@@ -4,10 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <script
-          async
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCf6DZtHkKBCud3eSyfUzqIdJSP2bOW3pk&libraries=places&callback=initMap"
-        ></script>
+    
       <body>
         <Main />
         <NextScript />

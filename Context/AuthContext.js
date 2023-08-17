@@ -1,44 +1,31 @@
+import { createContext, useEffect, useState } from "react";
+import { auth } from "../lib/firebase";
+import { db } from "../lib/firebase";
 import axios from "axios";
-import supabase from "../lib/supabase";
-
-const { createContext, useState, useEffect } = require("react");
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentRole, setRole] = useState("");
   const [loading, setLoading] = useState(null);
   const [userEmail,setUserEmail] = useState('')
   const [userDetails,setUserDetails] = useState(null)
 
-  useEffect(() => {
-    
 
-    supabase.auth.onAuthStateChange((event, session) => {
-      setCurrentUser(session?.user || null);
-      if(session)
-      setUserEmail(session.user.email)
-      
-    //  if (session.user) {
-    //   console.log("starting use effect")
-    //   const data = {
-    //     email: session.user.email,
-    //   };
-    //   console.log(data.email)
-    //   axios
-    //     .get("/api/getUserRole",data)
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // }
-    });
-    console.log("starting use effect")
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setLoading(true);
+      if(user)
+      {
+          setCurrentUser(user);
+          setUserEmail(user.email)
+      }
     
-    return () => {};
+      else setCurrentUser(null)
+      setLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -63,50 +50,49 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     console.log(userDetails);
   }, [userDetails]);
-  
 
   return (
-    <AuthContext.Provider value={{ currentUser, currentRole , userDetails}}>
+    <AuthContext.Provider
+      value={{ currentUser,userDetails,userEmail,currentRole }}
+    >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export const SignIn = async (email) => {
-  const { data, error } = await supabase.auth.signInWithOtp({
-    email: email,
-    options: {
-      shouldCreateUser: false,
-    },
-  });
-  if (error) {
-    console.log(" Auth Error : ", error.message);
-    return error.message;
+export const signInWithEmailPassword = async (email, password) => {
+  try {
+    const userCredential = await auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    const user = userCredential.user;
+    //console.log(user.email)
+  } catch (e) {
+    return e.message
+    console.log(e.message, e.code);
   }
 };
 
-export const SignInWithPass = async (email,password) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password:password
-  });
-  if (error) {
-    console.log(" Auth Error : ", error.message);
-    return error.message;
+export const signUp = async (email,password) => {
+  try {
+    const userCredential = await auth.createUserWithEmailAndPassword(email,password)
+  } catch (e) {
+    console.log(e.message);
+    return e.message
+   
   }
 };
+
+
 
 export const SignOut = async () => {
-  await supabase.auth.signOut();
-};
-
-export const SignUp = async (email,password) => {
-  const { error } = await supabase.auth.signUp({
-    email: email,
-    password:password
-  });
-  if (error) {
-    console.log(error.message);
-    throw error;
+  try {
+    await auth.signOut()
+    setCurrentUser(null);
+    return 1;
+  } catch (e) {
+    console.log("failed to logout");
+    return 0;
   }
 };
