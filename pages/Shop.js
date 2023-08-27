@@ -1,15 +1,36 @@
 import { AuthContext } from '@/Context/AuthContext';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 
 const AccordionList = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const {currentUser,userEmail} = useContext(AuthContext)
+  const {currentUser,userEmail,userDetails} = useContext(AuthContext)
+  const [isLoading,setLoading] = useState(false)
+  const router = useRouter()
 
 
   const handleApproveRequest = (requestid) => {
     console.log(requestid)
     console.log("Approve Request")
+    const data = {
+      requestid : requestid,
+      supplier : userDetails.email,
+      supplier_phone: userDetails.phone
+    }
+    axios.post("api/ApproveRequest",data).then((response) => {
+      console.log(response)
+      if(response.data.status === "Success")
+      {
+        alert("Request Approved")
+        router.reload()
+        
+      } else {
+        alert("Failed to Approve Request")
+      }
+    }).catch((e) => {
+      console.log(e)
+    })
   }
  
 
@@ -33,7 +54,7 @@ const AccordionList = () => {
       })
     }
       
-  },[currentUser,accordionItems])
+  },[currentUser])
 
   
 
@@ -85,6 +106,9 @@ const AccordionList = () => {
             )}
           </div>
         ))}
+        {
+          accordionItems.length === 0 ? <div className='text-center text-2xl font-bold'>No Open Requests</div> : ""
+        }
       </div>
     </div>
   );
