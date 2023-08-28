@@ -9,7 +9,7 @@ const CartList = () => {
   const [activeTab, setActiveTab] = useState("approved");
   const [filteredItems, setFilteredItems] = useState([]);
   const [dataDocs,setData] = useState([])
-  const {userDetails} = useContext(AuthContext)
+  const {userDetails,currentRole} = useContext(AuthContext)
   const router = useRouter()
 
   const handleTabChange = (tab) => {
@@ -33,7 +33,33 @@ const CartList = () => {
     
   }
 
- 
+ useEffect(() => {
+  if(currentRole === "supplier" && userDetails)
+  {
+    const data = {email:userDetails.email}
+    axios.post("api/getAcceptedRequest",data).then((response) => {
+      console.log(response.data.data)
+      console.log(typeof(dataDocs))
+      const docs = []
+      response.data.data.forEach((doc) => {
+        docs.push(doc)
+      })
+      setData(docs)
+      setFilteredItems([]);
+      if (activeTab === "pending") {
+        setFilteredItems(dataDocs.filter((item) => item.status === "pending"));
+      } else if (activeTab === "approved") {
+        setFilteredItems(dataDocs.filter((item) => item.status === "approved"));
+      }
+      else if (activeTab === "accepted") {
+        setFilteredItems(dataDocs.filter((item) => item.status === "accepted"));
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+  }
+ },[currentRole,userDetails])
 
   useEffect(  () => {
     if(userDetails)
