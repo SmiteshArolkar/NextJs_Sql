@@ -4,6 +4,7 @@ import axios from "axios";
 import { Router, useRouter } from "next/router";
 
 import React, { useContext, useEffect, useState } from "react";
+import Loader from "./Loader";
 
 const CartList = () => {
   const [activeTab, setActiveTab] = useState("approved");
@@ -12,10 +13,34 @@ const CartList = () => {
   const {userDetails,currentRole ,userEmail} = useContext(AuthContext)
   const [acceptedDocs,setAcceptedDocs] = useState([])
   const [approvedDocs,setApprovedDocs] = useState([])
+  const [isLoading,setLoading] = useState(false)
   const router = useRouter()
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleSendMessage = (doc) => {
+    if(userDetails)
+    {
+      setLoading(true)
+    const event = doc.eventid
+    const message = document.getElementById("message") ? document.getElementById("message").value : null
+    const receiver = activeTab == "approved" ? doc.supplier : doc.user
+    const requestid = doc.requestid
+    const sender = userDetails.email
+    const sendDate = new Date()
+    const data = {
+      event : event,
+      message : message,
+      receiver : receiver,
+      requestid : requestid,
+      sender : sender,
+      sendDate : sendDate,
+    }
+    console.log(data)
+    }
+    setLoading(false)
   };
 
   const handleDelete = async (requestId) => {
@@ -181,9 +206,7 @@ const CartList = () => {
     // Add more items
   ];
 
-  const handleSendMessage = (doc) => {
 
-  }
 
   return (
     <div className="p-4">
@@ -244,7 +267,7 @@ const CartList = () => {
               <p className="text-gray-600">date : {item.startdate.slice(0,10) + " to " + item.enddate.slice(0,10)}</p>
               <p className="text-gray-600">Address: {item.address}</p>
               <p className="text-gray-600">email: {item.email}</p>
-              
+              <p className="text-gray-600">Status: {item.requestid}</p>
               <p className="text-gray-600">Status: {item.status}</p>
             </div>
             <div className="grid hover:scale-125 duration-300">
@@ -284,11 +307,14 @@ const CartList = () => {
                     User Details
                     <div>
                       <input
+                      id="message"
                         placeholder="message"
                         type="text"
                         className="p-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-10/12 hover:-translate-x-12 duration-300"
                       ></input>
-                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 ">
+                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                      
+                      >
                         Send Message
                       </button>
                     </div>
@@ -327,6 +353,10 @@ const CartList = () => {
                         Client Phone  :  {doc.phone}
             
                       </div>
+                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                       Request Id  :  {doc.requestid}
+            
+                      </div>
                       </div>
                      
                       <div className="border-2 border-black p-3 rounded-lg m-4  overflow-x-auto" >
@@ -334,12 +364,15 @@ const CartList = () => {
                       </div>
                       <div className="mx-4 flex gap-4">
                       <input
+                        id="message"
                         placeholder="message"
                         type="text"
                         className="px-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
                       ></input>
                       <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
-                      onClick={handleSendMessage}
+                      onClick={(e) => {
+                        handleSendMessage(doc)
+                      }}
                       >
                         Send message
                       </button>
@@ -373,6 +406,10 @@ const CartList = () => {
                         Client Phone  :  {doc.phone}
             
                       </div>
+                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                       Request Id  :  {doc.requestid}
+            
+                      </div>
                       </div>
                      
                       <div className="border-2 border-black p-3 rounded-lg m-4  overflow-x-auto" >
@@ -380,15 +417,23 @@ const CartList = () => {
                       </div>
                       <div className="mx-4 flex gap-4">
                       <input
+                      id="message"
                         placeholder="message"
                         type="text"
                         className="px-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
                       ></input>
                       <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
-                      onClick={handleSendMessage}
+                     onClick={(e) => {
+                      handleSendMessage(doc)
+                    }}
                       >
                         Send message
                       </button>
+
+                      {
+                        isLoading && (<Loader></Loader>)
+                      }
+
                       </div>
                       
                     </div>
