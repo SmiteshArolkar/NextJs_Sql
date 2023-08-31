@@ -1,57 +1,31 @@
+import { AuthContext } from '@/Context/AuthContext';
 import Inbox from '@/components/Inbox';
-import React, { useState } from 'react';
+import axios from 'axios';
+
+import React, { useContext, useEffect, useState } from 'react';
 
 const Chat = () => {
-  
-    const [messages, setMessages] = useState([
-        {
-          id: 1,
-          sender: 'John',
-          subject: 'Hello',
-          content: 'Hey there, how are you?',
-          request_id:3,
-          date:"11 Aug 2003 18:20"
-        },
-        {
-          id: 2,
-          sender: 'Alice',
-          subject: 'Meeting',
-          content: 'Let\'s meet tomorrow at 3 PM.',
-          request_id:3
-        },
-        {
-            id: 1,
-            sender: 'John',
-            subject: 'Hello',
-            content: 'Hey there, how are you?',
-            request_id:3,
-            date:"11 Aug 2003 18:20"
-          },
-          {
-            id: 2,
-            sender: 'Alice',
-            subject: 'Meeting',
-            content: 'Let\'s meet tomorrow at 3 PM.',
-            request_id:3
-          },
-          {
-            id: 1,
-            sender: 'John',
-            subject: 'Hello',
-            content: 'Hey there, how are you?',
-            request_id:3,
-            date:"11 Aug 2003 18:20"
-          },
-          {
-            id: 2,
-            sender: 'Alice',
-            subject: 'Meeting',
-            content: 'Let\'s meet tomorrow at 3 PM.',
-            request_id:3
-          },
-        // Add more messages
-      ]);
 
+  const {userDetails} = useContext(AuthContext)
+  
+    const [messages, setMessages] = useState([]);
+
+      useEffect(() => {
+        if(messages.length === 0 && userDetails)
+        {
+          const data = {
+            email:userDetails.email
+          }
+          axios.post("api/getMessages",data).then((response) => {
+            console.log(response)
+            const docs = []
+            response.data.data.forEach((doc)=>{
+              docs.push(doc)
+            })
+            setMessages(docs)
+          })
+        }
+      })
     return (
         <div className='mt-12'>
             <div className='text-center font-bold text-3xl'>

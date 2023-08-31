@@ -29,7 +29,7 @@ const CartList = () => {
     const receiver = activeTab == "approved" ? doc.supplier : doc.user
     const requestid = doc.requestid
     const sender = userDetails.email
-    const sendDate = new Date()
+    const sendDate = new Date().toISOString()
     const data = {
       event : event,
       message : message,
@@ -38,6 +38,11 @@ const CartList = () => {
       sender : sender,
       sendDate : sendDate,
     }
+
+    axios.post("api/sendMessage",data).then((response) => {
+      console.log(response)
+    })
+    console.log(sendDate)
     console.log(data)
     }
     setLoading(false)

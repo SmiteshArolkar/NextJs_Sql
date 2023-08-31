@@ -11,13 +11,14 @@ const Inbox = ({messages}) => {
           <div className='bg-green-300 w-1/6 p-4 rounded-l-lg text-xl grid'>
             <div className='bg-white rounded-lg text-center'>{messages.sender}</div>
             <br></br>
-            Request ID : {messages.request_id}
+            <p>Event : {messages.event}</p>
+            Request ID : {messages.requestid}
           </div>
           <div className='text-center text-xl my-auto h-full w-11/12'>
-            {messages.content}
+            {messages.message}
           </div>
           <div>
-            {messages.date}
+            Date : {messages.send_date.slice(0,10)}
           </div>
     
         
