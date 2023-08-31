@@ -11,7 +11,11 @@ export default async (req,res) => {
                 message:error,
             })
         } else {
-            
+            res.send({
+                status : "success",
+                message : "fetched",
+                data : result
+            })
         }
     })
 }

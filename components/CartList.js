@@ -9,7 +9,8 @@ const CartList = () => {
   const [activeTab, setActiveTab] = useState("approved");
   const [filteredItems, setFilteredItems] = useState([]);
   const [dataDocs,setData] = useState([])
-  const {userDetails,currentRole} = useContext(AuthContext)
+  const {userDetails,currentRole ,userEmail} = useContext(AuthContext)
+  const [acceptedDocs,setAcceptedDocs] = useState([])
   const router = useRouter()
 
   const handleTabChange = (tab) => {
@@ -32,6 +33,27 @@ const CartList = () => {
     })
     
   }
+
+  useEffect(()=>{
+    if(activeTab === "accepted" && userDetails)
+    {
+      const data = {
+        email : userDetails.email
+      }
+      console.log(data)
+      setData([])
+      axios.post("api/getAcceptedRequests",data).then((response) => {
+        const docs = []
+        console.log(response)
+        response.data.data.forEach((doc) => {
+          docs.push(doc)
+        })
+        setAcceptedDocs(docs)
+      }).catch((e) => {
+        console.log(e)
+      })
+    }
+  },[activeTab])
 
  useEffect(() => {
   if(currentRole === "supplier" && userDetails)
@@ -62,7 +84,7 @@ const CartList = () => {
  },[currentRole,userDetails])
 
   useEffect(  () => {
-    if(userDetails)
+    if(userDetails && activeTab === "pending")
     {
       const data = {email:userDetails.email}
       const res =   axios.post("/api/getRequests",data).then((response) => {
@@ -136,6 +158,10 @@ const CartList = () => {
     },
     // Add more items
   ];
+
+  const handleSendMessage = (doc) => {
+
+  }
 
   return (
     <div className="p-4">
@@ -248,9 +274,64 @@ const CartList = () => {
                 </>
               )
               }
+
+              {
+                activeTab === "accepted" && <div>
+                  {
+                    acceptedDocs && <div>docs</div>
+                  }
+                  ACCEPTED 
+                </div>
+              }
+             
             </div>
           </div>
         ))}
+        {
+          activeTab === "accepted" && (
+            <div>
+              {
+                acceptedDocs && acceptedDocs.map((doc) => (<div>
+                   <>
+                  <div className="border-2 rounded-xl p-2 bg-yellow-200 shadow flex gap-2 justify-between">
+                 
+                    <div className="grid grid-cols-2">
+                      <div>
+                      <div className="border-2 border-black p-3 rounded-lg m-2">
+                        Client Email  :  {doc.user}
+            
+                      </div>
+                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                        Client Phone  :  {doc.phone}
+            
+                      </div>
+                      </div>
+                     
+                      <div className="border-2 border-black p-3 rounded-lg m-4  overflow-x-auto" >
+                        Supplier :  {doc.supplier}
+                      </div>
+                      <div className="mx-4 flex gap-4">
+                      <input
+                        placeholder="message"
+                        type="text"
+                        className="px-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
+                      ></input>
+                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                      onClick={handleSendMessage}
+                      >
+                        Send message
+                      </button>
+                      </div>
+                      
+                    </div>
+                    
+                  </div>
+                </>
+                </div>))
+              }
+            </div>
+          )
+        }
       </div>
     </div>
   );

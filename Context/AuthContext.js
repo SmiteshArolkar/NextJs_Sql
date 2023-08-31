@@ -110,3 +110,14 @@ export const SignUp = async (email,password) => {
     throw error;
   }
 };
+
+export const ResetPassword = async (password) => {
+  try{
+    const {error}= await supabase.auth.updateUser({
+      password:password
+    })
+  }catch(e){
+    console.log(e)
+    throw e
+  }
+}

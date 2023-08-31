@@ -1,4 +1,4 @@
-import { AuthContext } from "@/Context/AuthContext";
+import { AuthContext, ResetPassword, SignOut } from "@/Context/AuthContext";
 import Error from "@/components/Error";
 import Loader from "@/components/Loader";
 import Popup from "@/components/LoginPopUp";
@@ -18,6 +18,8 @@ const Settings = () => {
   const { currentRole,userDetails } = useContext(AuthContext);
   const [changeModeOpen, setChangeMode] = useState(false);
   const [isLoading,setLoading] = useState(false)
+  const [resetPss,setResetPss] = useState(false)
+  const [m_error,setMError] = useState("")
   const router = useRouter()
 
 
@@ -61,6 +63,30 @@ const Settings = () => {
      
     })
   
+  }
+
+  const handlePasswordReset = () => {
+    setLoading(true)
+    const pss = document.getElementById("pss-reset-ip").value 
+    if(!pss)
+    {
+      setMError("Incomplete field")
+    }
+    else
+    {
+      setMError("")
+      const result = ResetPassword(pss).then(() => {
+        SignOut().then(() => {
+          router.replace("/")
+        })
+      }).catch((e) => {
+        setMError(e)
+      })
+    }
+    setLoading(false)
+  }
+  const handleResPssToggle = () => {
+    setResetPss(!resetPss)
   }
 
   const handleSave = () => {
@@ -140,13 +166,55 @@ const Settings = () => {
               />
             </div>
           </div>
+          <div className=" justify-between flex">
           <button
             className="mt-4 bg-green-900 text-white px-4 py-2 rounded hover:bg-blue-600 active:scale-125  duration-700"
             onClick={handleSave}
           >
-            Save Details
+            Update Details
           </button>
+
+          
+          </div>
+          
         </div>
+        
+      </div>
+
+      <div className="w-3/4 mx-auto m-4 p-4">
+     {
+      !resetPss && (
+        <button
+        className="p-4 m-4 font-bold rounded hover:opacity-40 hover:scale-110 duration-500 bg-red-700 text-white"
+        onClick={() => {
+          setResetPss(!resetPss)
+        }}
+      >
+        Reset Password
+      </button>
+      )
+     }
+          {
+            resetPss && (
+<Popup isOpen={handleResPssToggle} onClose={handleResPssToggle} className=""> 
+<h1 className="text-center font-extrabold">RESET PASSWORD</h1>
+<p className="text-center text-red-800">Min 6 characters</p>
+<div className="grid p-10 gap-4">
+  <input id="pss-reset-ip" className=" border-2 border-teal-700 rounded-md p-1 font-bold text-center"></input>
+  <button className="bg-blue-400 p-3 rounded-lg hover:scale-125 duration-300" onClick={handlePasswordReset}>Reset Password</button>
+  {
+            isLoading && (<Loader></Loader>)
+            
+  }
+  {
+    m_error && (<Error message={m_error}></Error>)
+  }
+</div>
+</Popup>
+             
+            )
+          }
+        
       </div>
       {currentRole && currentRole === "user" && (
         <div className=" border-2 border-yellow-300 bg-white text-center mt-10 rounded-lg p-3 w-3/4 mx-auto h-3/4  ">
@@ -156,6 +224,8 @@ const Settings = () => {
           >
             Change To Supplier
           </button>
+
+
 
           {
             changeModeOpen && (
@@ -168,6 +238,8 @@ const Settings = () => {
               </Popup>
             )
           }
+         
+          
         </div>
       )}
     </div>
