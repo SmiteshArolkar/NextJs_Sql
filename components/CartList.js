@@ -11,6 +11,7 @@ const CartList = () => {
   const [dataDocs,setData] = useState([])
   const {userDetails,currentRole ,userEmail} = useContext(AuthContext)
   const [acceptedDocs,setAcceptedDocs] = useState([])
+  const [approvedDocs,setApprovedDocs] = useState([])
   const router = useRouter()
 
   const handleTabChange = (tab) => {
@@ -49,6 +50,27 @@ const CartList = () => {
           docs.push(doc)
         })
         setAcceptedDocs(docs)
+      }).catch((e) => {
+        console.log(e)
+      })
+    }
+  },[activeTab])
+
+  useEffect(()=>{
+    if(activeTab === "approved" && userDetails)
+    {
+      const data = {
+        email : userDetails.email
+      }
+      console.log(data)
+      setData([])
+      axios.post("api/getApprovedRequests",data).then((response) => {
+        const docs = []
+        console.log(response)
+        response.data.data.forEach((doc) => {
+          docs.push(doc)
+        })
+        setApprovedDocs(docs)
       }).catch((e) => {
         console.log(e)
       })
@@ -329,6 +351,53 @@ const CartList = () => {
                 </>
                 </div>))
               }
+              
+            </div>
+          )
+        }
+           {
+          activeTab === "approved" && (
+            <div>
+              {
+                approvedDocs && approvedDocs.map((doc) => (<div>
+                   <>
+                  <div className="border-2 rounded-xl p-2 bg-yellow-200 shadow flex gap-2 justify-between">
+                 
+                    <div className="grid grid-cols-2">
+                      <div>
+                      <div className="border-2 border-black p-3 rounded-lg m-2">
+                        Client Email  :  {doc.user}
+            
+                      </div>
+                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                        Client Phone  :  {doc.phone}
+            
+                      </div>
+                      </div>
+                     
+                      <div className="border-2 border-black p-3 rounded-lg m-4  overflow-x-auto" >
+                        Supplier :  {doc.supplier}
+                      </div>
+                      <div className="mx-4 flex gap-4">
+                      <input
+                        placeholder="message"
+                        type="text"
+                        className="px-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
+                      ></input>
+                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                      onClick={handleSendMessage}
+                      >
+                        Send message
+                      </button>
+                      </div>
+                      
+                    </div>
+                    
+                  </div>
+                </>
+                </div>))
+              }
+              
             </div>
           )
         }
