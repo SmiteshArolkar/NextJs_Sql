@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.1",
     "@mui/x-date-pickers": "^6.11.1",
     "@mui/x-date-pickers-pro": "^6.11.1",
     "@supabase/supabase-js": "^2.31.0",
@@ -23,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-places-autocomplete": "^7.3.0",
     "serverless-mysql": "^1.5.5",
-    "tailwindcss": "3.3.3"
+    "tailwindcss": "3.3.3",
+    "tw-elements": "^1.0.0-rc.1"
   }
 }

@@ -24,6 +24,7 @@ const RangeDatePicker = ({ onDateRangeChange }) => {
 
   return (
     <div className="p-4">
+      <h1>{startDate && startDate.toString().slice(0,10)} </h1>
       <h1 className="text-xl font-semibold mb-2">Select Event Date (Max 5 days)</h1>
       <DatePicker
         selected={startDate}

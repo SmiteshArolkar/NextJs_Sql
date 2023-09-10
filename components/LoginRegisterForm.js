@@ -127,27 +127,27 @@ const LoginForm = () => {
 
   if (Login)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="w-full max-w-md p-4">
+      <div className="flex justify-center items-center min-h-screen ">
+        <div className="w-full max-w-md p-4 ">
           <div className="flex mb-4 ">
             <button
-              className={`flex-1 p-2 text-center ${
-                activeTab === "user" ? "bg-red-700 text-white" : "bg-gray-300"
+              className={`flex-1 p-2 text-center rounded-ss-lg  ${
+                activeTab === "user" ? "bg-[#6979F8] text-white" : "bg-gray-300"
               }`}
               onClick={() => handleTabChange("user")}
             >
               Log in with Email Link
             </button>
             <button
-              className={`flex-1 p-2 text-center ${
-                activeTab === "admin" ? "bg-red-700 text-white" : "bg-gray-300"
+              className={`flex-1 p-2 text-center rounded-se-md ${
+                activeTab === "admin" ? "bg-[#6979F8] text-white" : "bg-gray-300"
               }`}
               onClick={() => handleTabChange("admin")}
             >
               Login with Password
             </button>
           </div>
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <form className="bg-white shadow-md  shadow-[#697af851] rounded px-8 pt-6 pb-8 mb-4">
             {/* Add your login/register form fields here */}
             <div className="mb-4">
               <div className="text-center font-extrabold my-4">
@@ -158,18 +158,18 @@ const LoginForm = () => {
               </label>
               <input
                 type="text"
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border duration-500  focus:border-[#6979f8] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="example@exp.com"
                 id="email"
               />
               {
                 activeTab == "admin" ? <div>
-                   <label className="block text-gray-700 text-sm font-bold mb-2">
+                   <label className="block text-gray-700 text-sm font-bold mb-2 my-2">
                 Password
               </label>
               <input
                 type="password"
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border rounded duration-500  focus:border-[#6979f8] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="*******"
                 id="password"
               />
@@ -178,7 +178,7 @@ const LoginForm = () => {
             </div>
             <div className="flex items-center  justify-between">
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-[#6979F8] hover:bg-[#4d61fb] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button" 
                 onClick={handleLogin}
               >
@@ -197,7 +197,7 @@ const LoginForm = () => {
               setLogin(!Login);
             }}
           >
-            Don't have a Account ? Register here
+            Don't have a Account ? <span className="text-[#6979f8]"> Register here </span>
           </button>
         </div>
       </div>
@@ -209,9 +209,9 @@ const LoginForm = () => {
           <div className="w-1/2 p-4">
             <div className="flex mb-4">
               <button
-                className={`flex-1 p-2 text-center ${
+                className={`flex-1 p-2 text-center rounded-ss-md ${
                   activeTab === "user"
-                    ? "bg-green-900 text-white"
+                    ? "bg-[#6979f8] text-white"
                     : "bg-gray-300"
                 }`}
                 onClick={() => handleTabChange("user")}
@@ -219,9 +219,9 @@ const LoginForm = () => {
                 User Registration
               </button>
               <button
-                className={`flex-1 p-2 text-center ${
+                className={`flex-1 p-2 text-center rounded-se-md ${
                   activeTab === "supplier"
-                    ? "bg-green-900 text-white"
+                    ? "bg-[#6979f8] text-white"
                     : "bg-gray-300"
                 }`}
                 onClick={() => handleTabChange("supplier")}
@@ -229,14 +229,14 @@ const LoginForm = () => {
                 Supplier Registration
               </button>
             </div>
-            <form className="bg-white grid grid-cols-2 gap-4 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form className="bg-white grid grid-cols-2 shadow-md shadow-[#697af882] gap-4 shadow-md rounded px-8 pt-6 pb-8 mb-4">
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Email
                 </label>
                 <input
                   type="email"
-                  className="appearance-none border-gray-400 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border-gray-400 duration-500  focus:border-[#6979f8] border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Email"
                   id="email"
                 />
@@ -248,7 +248,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="password"
-                  className="appearance-none border  border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border duration-500  focus:border-[#6979f8]  border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="*********"
                   id="password"
                 />
@@ -261,7 +261,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="name"
-                  className="appearance-none border rounded w-full  border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded duration-500  focus:border-[#6979f8] w-full  border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="name"
                   id="name"
                 />
@@ -273,7 +273,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="number"
-                  className="appearance-none border rounded w-full  border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none duration-500  focus:border-[#6979f8] border rounded w-full  border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Phone Number"
                   id="phone"
                 />
@@ -285,7 +285,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="text"
-                  className="appearance-none border rounded w-full border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded duration-500  focus:border-[#6979f8] w-full border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="city"
                   id="city"
                 />
@@ -297,7 +297,7 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="text"
-                  className="appearance-none border rounded w-full border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border duration-500  focus:border-[#6979f8] rounded w-full border-gray-400 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="state"
                   id="state"
                 />
@@ -308,15 +308,19 @@ const LoginForm = () => {
                   Address
                 </label>
                 <textarea
-                  className="appearance-none border rounded w-full py-2 border-gray-400 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border duration-500  focus:border-[#6979f8] rounded w-full py-2 border-gray-400 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Address"
                   rows="3"
                   id="address"
                 />
               </div>
-              <div className="flex items-center gap-20 ">
+              
+              <div className="m-2 font-semibold">
+               
+              </div>
+              <div className="flex items-center gap-20   col-span-2 justify-center ">
                 <button
-                  className="bg-green-900 hover:bg-green-700 text-white border-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-[#6979f8] w-1/2 py-3 hover:bg-[#4056fd] duration-300 text-white border-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                   onClick={handleRegister}
                 >
@@ -326,10 +330,8 @@ const LoginForm = () => {
                 </button>
                 {isLoading && <Loader></Loader>}
               </div>
-              <div className="m-2 font-semibold">
-               
-              </div>
             </form>
+            
             {error && <Error message={error}></Error>}
             {isSuccess && <Success message={isSuccess}></Success>}
             <button
@@ -338,7 +340,7 @@ const LoginForm = () => {
                 setLogin(!Login);
               }}
             >
-              Already have a Account ? Click here
+              Already have a Account ?<span className="text-[#6979f8]"> Click here</span> 
             </button>
           </div>
         </div>

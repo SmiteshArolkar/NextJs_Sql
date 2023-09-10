@@ -1,6 +1,8 @@
 import { AuthContext } from "@/Context/AuthContext";
 import Gallery from "@/components/Events";
-import axios from "axios";
+import ImageCarousel from "@/components/LandingPage/ImageCarasouel";
+
+
 import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
@@ -38,13 +40,12 @@ const Index = () => {
     <div>
       
       <div className="container mx-auto py-8">
-        {currentRole ? <div>hello {currentRole}</div>:<div>No Role</div>}
-      {currentUser ? <div>Hello {currentUser.email}</div> : <>No Login</>}
-        <h1 className="text-3xl font-semibold mb-4 text-center my-10 ">
+      
+        <h1 className="text-3xl font-semibold mb-4 text-left my-10 ">
           EVENT SERVICES
-          <div className="border-t border-gray-400 my-3"></div>
+         
         </h1>
-        
+        <ImageCarousel images={["/birthday.jpg","/bg.jpg","/birthday.jpg"]}></ImageCarousel>
         <Gallery items={galleryItems} />
         
       </div>

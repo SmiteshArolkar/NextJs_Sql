@@ -40,7 +40,7 @@ const Gallery = ({ items }) => {
           </div>
         </Popup>
         {items.map((item, index) => (
-          <div>
+          <div key={index}>
             <div className="bg-white rounded-xl m-4 py-5 px-2 border-2 hover:scale-110 duration-300 ">
               <div
                 onClick={() => {

@@ -25,21 +25,21 @@ const Chat = () => {
             setMessages(docs)
           })
         }
-      })
+      },[])
     return (
         <div className='mt-12'>
             <div className='text-center font-bold text-3xl'>
                 <h1>MESSAGE-BOX</h1>
                 
             </div>
-            <div className='w-3/4 mx-auto border-2 rounded-lg border-red-300 my-12 grid grid-cols-2 bg-white p-4 gap-8'>
+            <div className='w-3/4 mx-auto border-2 rounded-lg  my-12 grid grid-cols-2 bg-white p-4 gap-8'>
             {
-                messages && messages.map((message) => {
+                messages.length ? messages.map((message) => {
                     return (
                         
                         <Inbox key={message.id} messages={message}></Inbox>
                     )
-                })
+                }) : (<h1 className='text-black p-4'>No messages</h1>)
             }
             </div>
         </div>
