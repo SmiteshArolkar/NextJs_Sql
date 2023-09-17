@@ -6,7 +6,7 @@ const ImageCarasouel = () => {
             
 <div id="default-carousel " class="relative w-full  ]" data-carousel="slide">
 
-    <div class="relative   my-20 min-h-screen overflow-hidden rounded-lg md:h-96 shadow-lg shadow-[black]">
+    <div class="relative   my-20 h-64 lg:min-h-screen overflow-hidden rounded-lg md:h-96 shadow-lg shadow-[black]">
 
         <div class=" duration-700 ease-in-out " data-carousel-item>
 

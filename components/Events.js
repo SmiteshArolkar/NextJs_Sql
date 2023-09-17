@@ -20,7 +20,7 @@ const Gallery = ({ items }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 ">
         <Popup isOpen={isPopupOpen} onClose={closePopup}>
           <div>
             <h2 className="text-lg font-semibold mb-2 text-center">Login Required</h2>
@@ -41,7 +41,7 @@ const Gallery = ({ items }) => {
         </Popup>
         {items.map((item, index) => (
           <div key={index}>
-            <div className="bg-white rounded-xl m-4 py-5 px-2 border-2 hover:scale-110 duration-300 ">
+            <div className="bg-[#6979f8] text-white rounded-xl m-4 py-5 px-2 border-2 shadow shadow-[black] hover:scale-110 duration-300 ">
               <div
                 onClick={() => {
                   if (currentUser) {
@@ -62,16 +62,16 @@ const Gallery = ({ items }) => {
                   />
                 </div>
                 <div className="rounded-lg   cursor-pointer mx-2 ">
-                  <h3 className="text-gray-800 font-semibold text-xl sm:text-base p-2">
+                  <h3 className="text-white font-semibold text-xl sm:text-base p-2">
                     {item.title}
                   </h3>
-                  <p className="text-black text-xs sm:text-sm py-3">
+                  <p className="text-white text-xs sm:text-sm py-3">
                     {item.description}
                   </p>
                 </div>
               </div>
               <div
-                className="text-center text-yellow-600 hover:text-blue hover:text-blue-500 hover:scale-105  duration-150"
+                className="text-center text-white hover:text-blue hover:text-black hover:scale-105  duration-150"
                 onMouseOver={() => {
                   document
                     .getElementById("card-" + item.title)
@@ -88,12 +88,9 @@ const Gallery = ({ items }) => {
                   <div className="absolute m-3 p-4 mt-2 bg-yellow-300 text-black border duration-700 rounded-md  transform scale-95 origin-top transition  ease-in-out group-hover:scale-100">
                     {/* Dropdown content */}
                     <h1>
-                      Classes below enable you to display the accordion without
-                      the default background color, borders and rounded corners.
-                      It also makes it stretch full width of their parent
-                      container. It comes useful when you want to embed the
-                      accordion in a different component i.e. inside of a Card
-                      or
+                    {
+                      item.content
+                    }
                     </h1>
                   </div>
                 </div>

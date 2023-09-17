@@ -44,7 +44,7 @@ const Index = () => {
         <h1 className="text-3xl font-semibold mb-4 text-left my-10 ">
 
         </h1>
-        <div className=" ">
+        <div className="  lg:-mx-44">
         <ImageCarousel images={["/birthday.jpg","/bg.jpg","/birthday.jpg"]}></ImageCarousel>
         </div>
      
