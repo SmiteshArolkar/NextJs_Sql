@@ -36,8 +36,14 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto ">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <a href="#" className="text-black text-2xl font-bold">
-              EVENT MANAGEMENT
+            <a href="#" className="text-black text-2xl font-bold flex">
+              <div className=" mr-2    animate-pulse ease-in-out     duration-200">
+              <img src="/logo2.png" className=" w-5/6"/>
+              </div>
+              <div>
+              <img src="/logo1.png" className=" w-3/6"/>
+              </div>
+            
             </a>
           </div>
           <div className="hidden md:flex space-x-4 gap-8">

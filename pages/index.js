@@ -42,10 +42,12 @@ const Index = () => {
       <div className="container mx-auto py-8">
       
         <h1 className="text-3xl font-semibold mb-4 text-left my-10 ">
-          EVENT SERVICES
-         
+
         </h1>
+        <div className=" ">
         <ImageCarousel images={["/birthday.jpg","/bg.jpg","/birthday.jpg"]}></ImageCarousel>
+        </div>
+     
         <Gallery items={galleryItems} />
         
       </div>
