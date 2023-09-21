@@ -135,8 +135,8 @@ const CartList = () => {
   }
  },[currentRole,userDetails])
 
-  useEffect(  () => {
-    if(userDetails && activeTab === "pending")
+  useEffect(() => {
+    if( activeTab === "pending")
     {
       const data = {email:userDetails.email}
       const res =   axios.post("/api/getRequests",data).then((response) => {
@@ -149,13 +149,9 @@ const CartList = () => {
         setData(docs)
         setFilteredItems([]);
         if (activeTab === "pending") {
-          setFilteredItems(dataDocs.filter((item) => item.status === "pending"));
-        } else if (activeTab === "approved") {
-          setFilteredItems(dataDocs.filter((item) => item.status === "approved"));
+          setFilteredItems(docs.filter((item) => item.status === "pending"));
         }
-        else if (activeTab === "accepted") {
-          setFilteredItems(dataDocs.filter((item) => item.status === "accepted"));
-        }
+        console.log(filteredItems)
       })
       .catch((e) => {
         console.log(e)
@@ -260,26 +256,26 @@ const CartList = () => {
       </div>
       <div className="border-t border-gray-300 mb-8"></div>
 
-      <div className="grid grid-cols-1 gap-4 ">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 ">
         {filteredItems.map((item) => (
           <div
             key={item.id}
-            className="bg-blue-200 border-2 rounded-lg shadow-xl p-4 grid grid-cols-2 cursor-pointer"
+            className="bg-[] border-2  bg-[#6979f8] rounded-lg shadow-xl p-4 grid lg:grid-cols-1 cursor-pointer"
           >
             <div>
-              <h3 className="text-gray-800 font-semibold">{item.eventid}</h3>
+              <h3 className="text-white font-semibold">{item.eventid}</h3>
 
-              <p className="text-gray-600">date : {item.startdate.slice(0,10) + " to " + item.enddate.slice(0,10)}</p>
-              <p className="text-gray-600">Address: {item.address}</p>
-              <p className="text-gray-600">email: {item.email}</p>
-              <p className="text-gray-600">Status: {item.requestid}</p>
-              <p className="text-gray-600">Status: {item.status}</p>
+              <p className="text-white">date : {item.startdate.slice(0,10) + " to " + item.enddate.slice(0,10)}</p>
+              <p className="text-white">Address: {item.address}</p>
+              <p className="text-white">email: {item.email}</p>
+              <p className="text-white">Status: {item.requestid}</p>
+              <p className="text-white">Status: {item.status}</p>
             </div>
             <div className="grid hover:scale-125 duration-300">
               {item.status === "pending" ? (
                 <div className="flex gap-2">
                   
-                  <button className="border-2 px-2 w-1/4  my-4 mx-auto py-1 m-1 bg-red-300 rounded-lg shadow-lg w-max" name={item.requestid}
+                  <button className="border-2 px-2 w-1/4  my-4 mx-auto py-1 m-1 bg-white text-black rounded-lg shadow-lg w-max" name={item.requestid}
                   onClick={(e) =>{
                     handleDelete(e.target.name)
                   }}
@@ -340,49 +336,53 @@ const CartList = () => {
             </div>
           </div>
         ))}
+        
         {
           activeTab === "accepted" && (
             <div>
               {
-                acceptedDocs && acceptedDocs.map((doc) => (<div>
+                acceptedDocs && acceptedDocs.map((doc,index) => (<div
+                key={index}
+                >
                    <>
-                  <div className="border-2 rounded-xl p-2 bg-yellow-200 shadow flex gap-2 justify-between">
+                  <div className="border-2 rounded-xl p-2 bg-[#4e4e4e]  shadow-xl flex gap-2 justify-between text-white">
                  
-                    <div className="grid grid-cols-2">
+                    <div className="grid lg:grid-cols-1">
                       <div>
-                      <div className="border-2 border-black p-3 rounded-lg m-2">
+                      <div className=" p-1 rounded-lg m-1 ">
                         Client Email  :  {doc.user}
             
                       </div>
-                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                      <div className="p-1 rounded-lg m-1 ">
                         Client Phone  :  {doc.phone}
             
                       </div>
-                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                      <div className="p-1 rounded-lg m-1 ">
                        Request Id  :  {doc.requestid}
             
                       </div>
                       </div>
                      
-                      <div className="border-2 border-black p-3 rounded-lg m-4  overflow-x-auto" >
+                      <div className=" p-1 rounded-lg m-1  overflow-x-auto " >
                         Supplier :  {doc.supplier}
                       </div>
-                      <div className="mx-4 flex gap-4">
-                      <input
+                      <div className="mx-4 flex flex-col gap-4">
+                      <textarea
                         id="message"
                         placeholder="message"
                         type="text"
-                        className="px-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
-                      ></input>
-                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                        className="px-2 text-black w-full border-2 border-blue-300 rounded-lg  lg:hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
+                      ></textarea>
+                      <button className="border-2 mb-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
                       onClick={(e) => {
+                       
                         handleSendMessage(doc)
                       }}
                       >
                         Send message
                       </button>
                       </div>
-                      
+                   {isLoading && <div className=" m-2 "><Loader></Loader></div>}
                     </div>
                     
                   </div>
@@ -399,35 +399,35 @@ const CartList = () => {
               {
                 approvedDocs && approvedDocs.map((doc) => (<div>
                    <>
-                  <div className="border-2 rounded-xl p-2 bg-yellow-200 shadow flex gap-2 justify-between">
+                  <div className="border-2 rounded-xl p-2 bg-[#6979f8] shadow-xl text-white shadow flex gap-2 justify-between">
                  
-                    <div className="grid grid-cols-2">
+                    <div className="grid lg:grid-cols-1 ">
                       <div>
-                      <div className="border-2 border-black p-3 rounded-lg m-2">
+                      <div className=" p-1 rounded-lg m-">
                         Client Email  :  {doc.user}
             
                       </div>
-                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                      <div className=" p-1 rounded-lg m- ">
                         Client Phone  :  {doc.phone}
             
                       </div>
-                      <div className="border-2 border-black p-3 rounded-lg m-2 ">
+                      <div className=" p-1 rounded-lg m-">
                        Request Id  :  {doc.requestid}
             
                       </div>
                       </div>
                      
-                      <div className="border-2 border-black p-3 rounded-lg m-4  overflow-x-auto" >
+                      <div className=" p-1 rounded-lg m- overflow-x-auto" >
                         Supplier :  {doc.supplier}
                       </div>
-                      <div className="mx-4 flex gap-4">
-                      <input
+                      <div className="mx-4 flex flex-col gap-4 m-3">
+                      <textarea
                       id="message"
                         placeholder="message"
                         type="text"
-                        className="px-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
-                      ></input>
-                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                        className="px-2 border-2 text-black border-blue-300 w-full rounded-lg  lg:hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
+                      ></textarea>
+                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-[black] duration-300 "
                      onClick={(e) => {
                       handleSendMessage(doc)
                     }}

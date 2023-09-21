@@ -41,13 +41,15 @@ const Index = () => {
       
       <div className="container mx-auto py-8">
       
-        <h1 className="text-3xl font-semibold mb-4 text-left my-10 ">
-
-        </h1>
-        <div className="  lg:-mx-44">
+       
+        <div className="  lg:-mx-44 mx-3">
         <ImageCarousel images={["/birthday.jpg","/bg.jpg","/birthday.jpg"]}></ImageCarousel>
         </div>
-     
+        <h1 className="text-3xl grid  font-semibold mb-4 text-left my-10 flex justify-center items-center ">
+      
+          Our Services
+          <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div>
+</h1>
         <Gallery items={galleryItems} />
         
       </div>

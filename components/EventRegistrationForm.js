@@ -141,12 +141,12 @@ const [isLoading,setLoading] = useState(false)
   }
 
   return (
-    <div className=" flex items-center justify-center">
-      <div className="w-full max-w-3xl ">
-        <div className="text-center text-3xl font-extrabold m-3 pb-20 my-10">
+    <div className=" flex items-center justify-center ">
+      <div className="w-full  mx-3 border shadow ">
+        <div className="text-center text-3xl font-extrabold m-3  my-10">
           EVENT REQUEST FORM
         </div>
-        <div className="border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-blue-200 hover:scale-125 duration-300">
+        <div className="border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-[#e0e3f8] lg:hover:scale-105 duration-300 lg:w-3/4 lg:mx-auto">
           <div className="mb-6 ">
             <div className="text-center font-bold text-2xl mb-10">
               {EventID} Request Registration
@@ -164,7 +164,7 @@ const [isLoading,setLoading] = useState(false)
           </div>
 
           {activeStep === 0 && (
-            <div className="grid grid-cols-2">
+            <div className="grid lg:grid-cols-2">
               <div>
               <RangeDatePicker onDateRangeChange={handleDateRangeChange}></RangeDatePicker>
               </div>
@@ -237,8 +237,8 @@ const [isLoading,setLoading] = useState(false)
           )}
           {
             activeStep === 2 && (
-              <div>
-              <div className="text-gray-700 font-bold grid grid-cols-2 gap-2">
+              <div className="grid">
+              <div className="text-gray-700 font-bold grid lg:grid-cols-2 gap-4">
               <div>  Please review your information before submitting:
                 <br />
                 Name: {userDetails ? userDetails.name : ""}
@@ -247,7 +247,7 @@ const [isLoading,setLoading] = useState(false)
                 <br />
                 Phone: {phone}
                 </div>
-                <div className=" border-l-2 pl-7 border-black">
+                <div className=" lg:border-l-2 pl-7 border-black">
                 Event : {EventID}
                 <br/>
                 Date : {startDate.toString().slice(0,10)} - {endDate.toString().slice(0,15)}

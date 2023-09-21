@@ -2,7 +2,7 @@ import React from 'react';
 
 const ConfirmationStep = () => {
   return (
-    <div>
+    <div className='grid'>
       <p className="text-gray-700">
         Please review your information before submitting:
         <br />
