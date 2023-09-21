@@ -136,7 +136,7 @@ const CartList = () => {
  },[currentRole,userDetails])
 
   useEffect(() => {
-    if( activeTab === "pending")
+    if( activeTab === "pending" && userDetails)
     {
       const data = {email:userDetails.email}
       const res =   axios.post("/api/getRequests",data).then((response) => {

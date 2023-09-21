@@ -7,6 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 const Chat = () => {
 
   const {userDetails} = useContext(AuthContext)
+  const [chat,setChat] = useState([])
   
     const [messages, setMessages] = useState([]);
 
@@ -22,6 +23,15 @@ const Chat = () => {
             response.data.data.forEach((doc)=>{
               docs.push(doc)
             })
+            const chatDocs = []
+            docs.forEach((doc) => {
+              if(!chatDocs.includes(doc.sender)){
+                chatDocs.push(doc.sender)
+              }
+            })
+            setChat(
+              chatDocs
+            )
             setMessages(docs)
           })
         }
@@ -32,7 +42,14 @@ const Chat = () => {
                 <h1>MESSAGE-BOX</h1>
                 
             </div>
-            <div className='w-3/4 mx-auto border-2 rounded-lg  my-12 grid grid-cols-2 bg-white p-4 gap-8'>
+            <div className='w-3/4 mx-auto border-2 p-4 rounded-lg  my-12 grid lg:grid-cols-4 bg-white  gap-8'>
+              {
+                // chat && chat.map((doc) => (
+                //   <div>
+                    
+                //   </div>
+                // ))
+              }
             {
                 messages.length ? messages.map((message) => {
                     return (

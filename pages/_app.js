@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }) {
     <div className="flex flex-col min-h-screen">
       <AuthProvider>
       <NavBar></NavBar>
-      <div className=" lg:mb-20 mb-10"></div>
+      <div className=" lg:mb-20 mb-20"></div>
       <Component {...pageProps} />
       </AuthProvider>
     </div>

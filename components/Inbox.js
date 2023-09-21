@@ -2,20 +2,20 @@ import React, { useState } from "react";
 
 const Inbox = ({ messages }) => {
   return (
-    <div className=" border-2 border-black rounded-lg bg-blue-300 hover:scale-125 duration-300 gap-6">
-      <div className="flex">
-        <div className="bg-green-300 w-1/6 p-4 rounded-l-lg text-xl grid">
-          <div className="bg-white rounded-lg text-center">
-            {messages.sender}
+    <div className=" border-2 p-4 rounded-lg shadow-xl bg-[#6979f8]  lg:hover:scale-125 duration-300 gap-">
+      <div className="">
+        <div className=" w-full mx-auto text-center   text-xl grid">
+          <div className=" rounded-lg text-center font-bold  mx-2 my-2">
+            { "> " + messages.sender}
           </div>
-          <br></br>
-          <p>Event : {messages.event}</p>
+          <p className="text-left text-white mx-2">Event : {messages.event}<br></br>
           Request ID : {messages.requestid}
+          </p>
         </div>
-        <div className="text-center text-xl my-auto h-full w-11/12">
+        <div className="text-center text-xl p-4 rounded-xl m-3  bg-white my-5 h-full w-11/12">
           {messages.message}
         </div>
-        <div>Date : {messages.send_date.slice(0, 10)}</div>
+        <div className="font-bold">Date : {messages.send_date.slice(0, 10)}</div>
       </div>
     </div>
   );

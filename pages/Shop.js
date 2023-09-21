@@ -69,21 +69,21 @@ const AccordionList = () => {
   };
 
   return (
-    <div className="p-4 w-3/4 mx-auto">
+    <div className="p-4 lg:w-3/4 w-full mx-auto">
         <div className='text-center my-10 '>
         <h1 className="text-3xl font-bold mb-4">OPEN REQUEST</h1>
         </div>
      
-      <div className="space-y-8 bg-white p-4 rounded-lg shadow-xl text-slate-900">
+      <div className="space-y-8 bg-white p-4 rounded-lg grid duration-500 shadow-xl text-slate-900">
         {accordionItems.map((item, index) => (
-          <div key={item.id} className="border-2 p-2 border-black bg-yellow-400 hover:scale-110 duration-500  rounded-xl">
+          <div key={item.id} className="border-2 p-2  bg-[#6979f8] lg:hover:scale-110 duration-500  rounded-xl">
             <button
               className="w-full text-left p-3"
               onClick={() => toggleAccordion(index)}
             >
               <div className=''>
               <span className="font-semibold">{item.eventid} <span className='mr-2'></span> | </span>
-              <span className="font-semibold ml-3">date : {item.startdate.slice(0,10)}</span>
+              <span className="font-semibold ml-3">Location : {item.address}</span>
               <span className="float-right">
                 {activeIndex === index ? '-' : '+'}
               </span>
@@ -92,15 +92,16 @@ const AccordionList = () => {
               
             </button>
             {activeIndex === index && (
-              <div className="p-3 grid grid-cols-1">
+              <div className="p-3 grid grid-cols-1 text-white">
                 <div>
-                Contact : {item.email}
+                Contact : {item.email}<br></br>
+                date : {item.startdate.slice(0,10)} to {item.enddate.slice(0,10)} 
                 </div>
 
-                <div className='text-center bg-green-500 border rounded-lg w-2/4 hover:bg-blue-300 mx-auto py-2 m-2 text-white'>
+                <div className='text-center bg-white text-black border rounded-lg w-4/4 hover:bg-blue-300 mx-auto  px-2  mt-5 py-2 m-2 '>
                     <button className='text-center w-full' onClick={()=>{
                       handleApproveRequest(item.requestid)
-                    }}>ACCEPT REQUEST</button>
+                    }}>ACCEPT THIS REQUEST</button>
                 </div>
               </div>
             )}
