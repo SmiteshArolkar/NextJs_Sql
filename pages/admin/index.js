@@ -1,3 +1,4 @@
+import AdminUserList from '@/components/AdminUserList';
 import Error from '@/components/Error';
 import React, { useState } from 'react';
 
@@ -26,9 +27,11 @@ const handleSubmit = () => {
 }
 
     return (
-        <div className='text-black pt-6'>
-            <div className='w-3/4 mx-auto grid gap-4'>
-            <h1 className=' font-bold text-2xl '>Add an Event </h1>
+        <div className='text-black pt-10 grid lg:grid-cols-2 w-3/4 mx-auto' >
+            <div className=' grid gap-4 '>
+            <h1 className=' font-bold text-2xl '>Add an Event 
+            <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div></h1>
+            
                 <div className=' grid  gap-2'>
                   
                     <label className=' font-semibold '>Title<span className='text-red-500 text-2xl'>*</span> : </label>
@@ -59,6 +62,17 @@ const handleSubmit = () => {
                     {
                         e_m && (<Error message={e_m}></Error>)
                     }
+                </div>
+            </div>
+
+            {/* user List*/}
+            <div className=' grid gap-4'>
+                <div>
+                    <h1 className='text-2xl font-bold  mt-5'>Active Users</h1>
+                    <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div>
+                </div>
+                <div className='grid'>
+                    <AdminUserList></AdminUserList>
                 </div>
             </div>
         </div>
