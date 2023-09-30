@@ -1,6 +1,6 @@
 import { AuthContext } from "@/Context/AuthContext";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { Suspense } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import Popup from "./LoginPopUp";
@@ -55,11 +55,13 @@ const Gallery = ({ items }) => {
                   key={index}
                   className=" bg-yellow-500 rounded-lg shadow-md  cursor-pointer mx-2 hover:scale-100 duration-300"
                 >
-                  <img
-                    src={item.image}
+                <Suspense fallback={"...loading"}>
+                <img
+                    src={item.imageUrl}
                     alt={item.title}
                     className="w-full h-full object-cover mb-2 rounded-md"
                   />
+                </Suspense>
                 </div>
                 <div className="rounded-lg   cursor-pointer mx-2 ">
                   <h3 className="text-white font-semibold text-xl sm:text-base p-2">

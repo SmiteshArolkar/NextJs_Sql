@@ -1,14 +1,16 @@
 import { AuthContext } from "@/Context/AuthContext";
 import Gallery from "@/components/Events";
 import ImageCarousel from "@/components/LandingPage/ImageCarasouel";
+import axios from "axios";
 
 
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 
 const Index = () => {
   const { currentUser,currentRole,setRole } = useContext(AuthContext);
+  const [events,setEvents] = useState([])
 
 
   
@@ -33,9 +35,22 @@ const Index = () => {
 
   useEffect(() => {
     
-    
-   
-  }, [currentUser]);
+    if(events.length === 0)
+    {
+      axios.get("api/getEvents").then((response) => {
+        console.log(response)
+        const docs = []
+        response.data.data.forEach((doc) => {
+          docs.push(doc)
+        })
+        setEvents(docs)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+    }
+
+  }, []);
   return (
     <div>
       
@@ -50,7 +65,7 @@ const Index = () => {
           Our Services
           <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div>
 </h1>
-        <Gallery items={galleryItems} />
+        <Gallery items={events} />
         
       </div>
     </div>

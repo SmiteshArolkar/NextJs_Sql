@@ -141,12 +141,12 @@ const [isLoading,setLoading] = useState(false)
   }
 
   return (
-    <div className=" flex items-center justify-center ">
+    <div className=" flex items-center justify-center  ">
       <div className="w-full  mx-3 border shadow ">
         <div className="text-center text-3xl font-extrabold m-3  my-10">
           EVENT REQUEST FORM
         </div>
-        <div className="border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-[#e0e3f8] lg:hover:scale-105 duration-300 lg:w-3/4 lg:mx-auto">
+        <div className="border-2 p-8 rounded-xl  border-r-green-900 border-b-red-900   shadow-xl bg-[#e0e3f8] lg:hover:scale-105 duration-300 lg:w-3/4 lg:mx-auto mx-4">
           <div className="mb-6 ">
             <div className="text-center font-bold text-2xl mb-10">
               {EventID} Request Registration

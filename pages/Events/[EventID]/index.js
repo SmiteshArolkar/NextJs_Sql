@@ -6,7 +6,7 @@ const Index = () => {
     const router = useRouter()
     const {EventID} = router.query
     return (
-        <div>
+        <div className='lg:mx-0  '>
             Event Regis Form {EventID}
             <EventRegistrationForm EventID={EventID}></EventRegistrationForm>
         </div>
