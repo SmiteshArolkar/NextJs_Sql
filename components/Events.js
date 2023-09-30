@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import Popup from "./LoginPopUp";
+import Loader from "./Loader";
 
 const Gallery = ({ items }) => {
   const router = useRouter();
@@ -55,7 +56,7 @@ const Gallery = ({ items }) => {
                   key={index}
                   className=" bg-yellow-500 rounded-lg shadow-md  cursor-pointer mx-2 hover:scale-100 duration-300"
                 >
-                <Suspense fallback={"...loading"}>
+                <Suspense fallback={<div><Loader></Loader></div>}>
                 <img
                     src={item.imageUrl}
                     alt={item.title}

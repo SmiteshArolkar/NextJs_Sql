@@ -1,10 +1,13 @@
 import { AuthContext } from "@/Context/AuthContext";
-import { data } from "autoprefixer";
+
 import axios from "axios";
 import { Router, useRouter } from "next/router";
 
+
 import React, { useContext, useEffect, useState } from "react";
 import Loader from "./Loader";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const CartList = () => {
   const [activeTab, setActiveTab] = useState("approved");
@@ -223,7 +226,7 @@ const CartList = () => {
             handleTabChange("pending");
           }}
         >
-          Pending Request
+          Pending Event
         </button>
         <div className="border-r border-gray-300 mr-3"></div>
         <button
@@ -237,10 +240,12 @@ const CartList = () => {
             handleTabChange("approved");
           }}
         >
-          Approved Request
+          Approved Event
         </button>
         <div className="border-r border-gray-300 mr-3"></div>
-        <button
+       {
+        currentRole == "supplier" && (
+          <button
           className={`mr-4 ${
             activeTab === "accepted"
               ? "text-red-300 font-bold "
@@ -251,8 +256,10 @@ const CartList = () => {
             handleTabChange("accepted");
           }}
         >
-          Accepted Requests
+          Accepted Event
         </button>
+        )
+       }
       </div>
       <div className="border-t border-gray-300 mb-8"></div>
 
@@ -265,10 +272,14 @@ const CartList = () => {
             <div>
               <h3 className="text-white font-semibold">{item.eventid}</h3>
 
-              <p className="text-white">date : {item.startdate.slice(0,10) + " to " + item.enddate.slice(0,10)}</p>
+              <div className="text-white my-2 flex gap-2">
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={item.startdate.slice(0,10)}></input>
+             <p className="my-2">-</p>
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={item.enddate.slice(0,10)}></input>
+                </div>
               <p className="text-white">Address: {item.address}</p>
               <p className="text-white">email: {item.email}</p>
-              <p className="text-white">Status: {item.requestid}</p>
+              <p className="text-white">Event ID : {item.requestid}</p>
               <p className="text-white">Status: {item.status}</p>
             </div>
             <div className="grid hover:scale-125 duration-300">
@@ -280,7 +291,7 @@ const CartList = () => {
                     handleDelete(e.target.name)
                   }}
                   >
-                    Cancel Request
+                    Cancel Event
                   </button>
                 </div>
               ) :
@@ -338,7 +349,7 @@ const CartList = () => {
         ))}
         
         {
-          activeTab === "accepted" && (
+          activeTab === "accepted"  &&  (
             <div>
               {
                 acceptedDocs && acceptedDocs.map((doc,index) => (<div
@@ -347,8 +358,14 @@ const CartList = () => {
                    <>
                   <div className="border-2 rounded-xl p-2 bg-[#4e4e4e]  shadow-xl flex gap-2 justify-between text-white">
                  
-                    <div className="grid lg:grid-cols-1">
+                    <div className="grid lg:grid-cols-1 p-3">
                       <div>
+                      <h3 className="text-white font-semibold">{doc.eventid}</h3>
+                      <div className="text-white my-2 flex gap-2">
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={doc.startdate.slice(0,10)}></input>
+             <p className="my-2">-</p>
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={doc.enddate.slice(0,10)}></input>
+                </div>
                       <div className=" p-1 rounded-lg m-1 ">
                         Client Email  :  {doc.user}
             
@@ -358,7 +375,7 @@ const CartList = () => {
             
                       </div>
                       <div className="p-1 rounded-lg m-1 ">
-                       Request Id  :  {doc.requestid}
+                       Event Id  :  {doc.requestid}
             
                       </div>
                       </div>
@@ -401,24 +418,25 @@ const CartList = () => {
                    <>
                   <div className="border-2 rounded-xl p-2 bg-[#6979f8] shadow-xl text-white shadow flex gap-2 justify-between">
                  
-                    <div className="grid lg:grid-cols-1 ">
+                    <div className="grid lg:grid-cols-1 p-3">
+                    <h3 className="text-white font-semibold">{doc.eventid}</h3>
                       <div>
+                      <div className="text-white my-2 flex gap-2">
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={doc.startdate.slice(0,10)}></input>
+             <p className="my-2">-</p>
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={doc.enddate.slice(0,10)}></input>
+                </div>
                       <div className=" p-1 rounded-lg m-">
-                        Client Email  :  {doc.user}
-            
-                      </div>
-                      <div className=" p-1 rounded-lg m- ">
-                        Client Phone  :  {doc.phone}
-            
-                      </div>
-                      <div className=" p-1 rounded-lg m-">
-                       Request Id  :  {doc.requestid}
+                       Event Id  :  {doc.requestid}
             
                       </div>
                       </div>
-                     
+                    
                       <div className=" p-1 rounded-lg m- overflow-x-auto" >
                         Supplier :  {doc.supplier}
+                      </div>
+                      <div className=" p-1 rounded-lg m- overflow-x-auto" >
+                        Phone :  {doc.supplier_phone}
                       </div>
                       <div className="mx-4 flex flex-col gap-4 m-3">
                       <textarea

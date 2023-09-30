@@ -10,6 +10,8 @@ export default function App({ Component, pageProps }) {
       <NavBar></NavBar>
       <div className=" lg:mb-20 mb-20"></div>
       <Component {...pageProps} />
+      <div className="mb-20"></div>
+      <Footer></Footer>
       </AuthProvider>
     </div>
   );

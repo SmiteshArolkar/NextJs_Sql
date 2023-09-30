@@ -92,10 +92,14 @@ const AccordionList = () => {
               
             </button>
             {activeIndex === index && (
-              <div className="p-3 grid grid-cols-1 text-white">
+              <div className="p-3 grid grid-cols-1  text-white">
                 <div>
                 Contact : {item.email}<br></br>
-                date : {item.startdate.slice(0,10)} to {item.enddate.slice(0,10)} 
+                <div className="text-white my-2 flex gap-2">
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={item.startdate.slice(0,10)}></input>
+             <p className="my-2">-</p>
+             <input type="date"  disabled className=" rounded-md   flex  text-black  " value={item.enddate.slice(0,10)}></input>
+                </div>
                 </div>
 
                 <div className='text-center bg-white text-black border rounded-lg w-4/4 hover:bg-blue-300 mx-auto  px-2  mt-5 py-2 m-2 '>

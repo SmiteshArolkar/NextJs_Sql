@@ -9,13 +9,14 @@ const Inbox = ({ messages }) => {
             { "> " + messages.sender}
           </div>
           <p className="text-left text-white mx-2">Event : {messages.event}<br></br>
-          Request ID : {messages.requestid}
+          Event ID : {messages.requestid}
           </p>
         </div>
         <div className="text-center text-xl p-4 rounded-xl m-3  bg-white my-5 h-full w-11/12">
           {messages.message}
         </div>
         <div className="font-bold">Date : {messages.send_date.slice(0, 10)}</div>
+        <div className="font-bold tracking-widest">time : {messages.send_date.slice(11)}</div>
       </div>
     </div>
   );
