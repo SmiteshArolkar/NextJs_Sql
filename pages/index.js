@@ -64,6 +64,7 @@ const Index = () => {
       
           Our Services
           <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div>
+          <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div>
 </h1>
         <Gallery items={events} />
         

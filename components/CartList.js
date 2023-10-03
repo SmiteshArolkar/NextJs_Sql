@@ -306,7 +306,7 @@ const CartList = () => {
                         type="text"
                         className="p-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-10/12 hover:-translate-x-12 duration-300"
                       ></input>
-                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 ">
+                      <button className="border-2 p-2 rounded-lg   text-white hover:bg-blue-400 duration-300 ">
                         Send message
                       </button>
                     </div>
@@ -324,7 +324,7 @@ const CartList = () => {
                         type="text"
                         className="p-2 border-2 border-blue-300 rounded-lg  hover:scale-150 w-10/12 hover:-translate-x-12 duration-300"
                       ></input>
-                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                      <button className="border-2 p-2 rounded-lg   text-white hover:bg-blue-400 duration-300 "
                       
                       >
                         Send Message
@@ -390,7 +390,7 @@ const CartList = () => {
                         type="text"
                         className="px-2 text-black w-full border-2 border-blue-300 rounded-lg  lg:hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
                       ></textarea>
-                      <button className="border-2 mb-2 p-2 rounded-lg bg-green-500  text-white hover:bg-blue-400 duration-300 "
+                      <button className="border-2 mb-2 p-2 rounded-lg bg-white text-black  hover:text-white hover:bg-blue-400 duration-300 "
                       onClick={(e) => {
                        
                         handleSendMessage(doc)
@@ -445,7 +445,7 @@ const CartList = () => {
                         type="text"
                         className="px-2 border-2 text-black border-blue-300 w-full rounded-lg  lg:hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
                       ></textarea>
-                      <button className="border-2 p-2 rounded-lg bg-green-500  text-white hover:bg-[black] duration-300 "
+                      <button className="border-2 p-2 rounded-lg bg-white text-black  hover:bg-[#272c4d] hover:text-white duration-300 "
                      onClick={(e) => {
                       handleSendMessage(doc)
                     }}

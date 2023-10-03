@@ -106,15 +106,18 @@ const Settings = () => {
   return (
     <div className="mt-10">
       <div className="text-3xl text-center font-extrabold">SETTINGS</div>
+      <div className='flex justify-center    '>
+        <div className="w-20  mx-2 h-0 border border-[#6979f8] "></div>
+        </div>
       <div className=" border-2  bg-white mt-10 rounded-lg p-3 w-3/4 mx-auto h-3/4  ">
         <div className="p-4">
-          <h1 className="text-2xl font-semibold mb-4  ">Edit Details</h1>
+          <h1 className="text-2xl font-semibold mb-4   ">Edit Details</h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
               <label className="block font-semibold mb-2">Name</label>
               <input
                 type="text"
-                className="border border-[#6979f8] rounded p-2 w-full  active:scale-125  duration-700"
+                className=" bg-[#E1E7EC] border-0 font-bold  rounded-lg  p-2 w-full  active:scale-125  duration-700"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -123,7 +126,7 @@ const Settings = () => {
               <label className="block font-semibold mb-2 ">Phone Number</label>
               <input
                 type="text"
-                className="border rounded p-2 w-full border-[#6979f8]   active:scale-125  duration-700"
+                className="bg-[#E1E7EC] border-0 font-bold  rounded-lg p-2 w-full    active:scale-125  duration-700"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
@@ -132,7 +135,7 @@ const Settings = () => {
               <label className="block font-semibold mb-2">Email</label>
               <input
                 type="email"
-                className="border rounded p-2 w-full border-[#6979f8]  active:scale-125  duration-700 "
+                className="bg-[#E1E7EC] border-0 font-bold  rounded-lg  p-2 w-full active:scale-125  duration-700 "
                 disabled="true"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -142,7 +145,7 @@ const Settings = () => {
               <label className="block font-semibold mb-2">Address</label>
               <input
                 type="text"
-                className="border rounded p-2 w-full border-[#6979f8] active:scale-125  duration-700"
+                className="bg-[#E1E7EC] border-0 font-bold p-2 w-full  rounded-lg active:scale-125  duration-700"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
@@ -151,7 +154,7 @@ const Settings = () => {
               <label className="block font-semibold mb-2 ">City</label>
               <input
                 type="text"
-                className="border rounded p-2 w-full border-[#6979f8] active:scale-125  duration-700"
+                className="bg-[#E1E7EC] border-0 font-bold p-2 w-full  rounded-lg active:scale-125  duration-700"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
@@ -160,7 +163,7 @@ const Settings = () => {
               <label className="block font-semibold mb-2">State</label>
               <input
                 type="text"
-                className="border rounded p-2 w-full border-[#6979f8] active:scale-125  duration-700"
+                className="bg-[#E1E7EC] border-0 font-bold p-2 w-full  rounded-lg active:scale-125  duration-700"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
               />

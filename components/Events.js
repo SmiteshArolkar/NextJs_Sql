@@ -56,7 +56,7 @@ const Gallery = ({ items }) => {
                   key={index}
                   className=" bg-yellow-500 rounded-lg shadow-md  cursor-pointer mx-2 hover:scale-100 duration-300"
                 >
-                <Suspense fallback={<div><Loader></Loader></div>}>
+                <Suspense  fallback={<div>...isLoading</div>}>
                 <img
                     src={item.imageUrl}
                     alt={item.title}

@@ -71,12 +71,17 @@ const AccordionList = () => {
   return (
     <div className="p-4 lg:w-3/4 w-full mx-auto">
         <div className='text-center my-10 '>
-        <h1 className="text-3xl font-bold mb-4">OPEN REQUEST</h1>
+        <h1 className="text-3xl font-bold mb-4">OPEN REQUEST
+        </h1>
+        <div className='flex justify-center mr-28   -my-2  '>
+        <div className="w-28  mx-2 h-0 border border-[#6979f8] "></div>
+        </div>
+        
         </div>
      
       <div className="space-y-8 bg-white p-4 rounded-lg grid duration-500 shadow-xl text-slate-900">
         {accordionItems.map((item, index) => (
-          <div key={item.id} className="border-2 p-2  bg-[#6979f8] lg:hover:scale-110 duration-500  rounded-xl">
+          <div key={item.id} className=" text-white border-2 p-2  bg-[#6979f8] lg:hover:scale-110 duration-500  rounded-xl">
             <button
               className="w-full text-left p-3"
               onClick={() => toggleAccordion(index)}
@@ -87,7 +92,9 @@ const AccordionList = () => {
               <span className="float-right">
                 {activeIndex === index ? '-' : '+'}
               </span>
+              
               </div>
+              
               
               
             </button>
@@ -102,11 +109,7 @@ const AccordionList = () => {
                 </div>
                 </div>
 
-                <div className='text-center bg-white text-black border rounded-lg w-4/4 hover:bg-blue-300 mx-auto  px-2  mt-5 py-2 m-2 '>
-                    <button className='text-center w-full' onClick={()=>{
-                      handleApproveRequest(item.requestid)
-                    }}>ACCEPT THIS REQUEST</button>
-                </div>
+             
               </div>
             )}
           </div>
