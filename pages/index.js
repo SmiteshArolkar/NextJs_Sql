@@ -1,6 +1,7 @@
 import { AuthContext } from "@/Context/AuthContext";
 import Gallery from "@/components/Events";
 import ImageCarousel from "@/components/LandingPage/ImageCarasouel";
+import LandingPage from "@/components/LandingPage/main";
 import axios from "axios";
 
 
@@ -69,6 +70,7 @@ const Index = () => {
         <Gallery items={events} />
         
       </div>
+      <LandingPage></LandingPage>
     </div>
   );
 };

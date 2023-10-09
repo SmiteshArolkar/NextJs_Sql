@@ -121,3 +121,7 @@ export const ResetPassword = async (password) => {
     throw e
   }
 }
+
+export  const DeleteUser = async (email) => {
+  
+}

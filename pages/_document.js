@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      
+
       <body>
         <Main />
         <NextScript />
@@ -18,7 +18,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Raleway:wght@300&display=swap"
           rel="stylesheet"
         />
-       
       </body>
     </Html>
   );
