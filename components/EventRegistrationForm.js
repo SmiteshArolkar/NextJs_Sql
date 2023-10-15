@@ -12,6 +12,7 @@ import { AuthContext } from "@/Context/AuthContext";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Loader from "./Loader";
+import Test from "./EventFormSteps/Test";
 
 const steps = [
   { id: 1, label: "Event Info", component: PersonalInfoStep },
@@ -28,6 +29,11 @@ const EventRegistrationForm = ({ EventID }) => {
 const [days,setDays] = useState(0)
 const [email,setEmail] = useState("")
 const [phone,setPhone] = useState("")
+
+const handleAddressChange = (address) => {
+  setAddress(address)
+  console.log(address)
+}
 
 const {userDetails} = useContext(AuthContext)
 
@@ -83,7 +89,7 @@ const [isLoading,setLoading] = useState(false)
       let f = false
       setError_M("")
       if(days === 0) {setError_M("Date Not Selected");f=true }
-      if(document.getElementById("address").value === "") {setError_M("fill in Address"); f=true}
+      if(address === "") {setError_M("fill in Address"); f=true}
       if(!f) setActiveStep(activeStep+1)
     }
     if(activeStep === 1)
@@ -190,15 +196,8 @@ const [isLoading,setLoading] = useState(false)
                 <label className="block text-gray-700 text-lg font-semibold mb-2">
                   Address
                 </label>
-                <textarea
-                id="address"
-                  type="text-area"
-                  className="appearance-none border rounded-lg w-full py-3 px-4 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder=""
-                  onChange={(e)=>{
-                    setAddress(e.target.value)
-                  }}
-                />
+                <Test handleAddressChange={handleAddressChange}></Test>
+              
                 </div>
 
                 </div>
