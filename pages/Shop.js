@@ -107,6 +107,13 @@ const AccordionList = () => {
              <p className="my-2">-</p>
              <input type="date"  disabled className=" rounded-md   flex  text-black  " value={item.enddate.slice(0,10)}></input>
                 </div>
+                <button className="bg-white w-1/3 flex  justify-center  text-black rounded p-2 m-2 text-center" onClick={handleApproveRequest(item.requestid)}>
+                  <div >
+
+                  Accept Request
+                  </div>
+                 
+                </button>
                 </div>
 
              

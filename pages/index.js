@@ -167,10 +167,10 @@ const Index = () => {
         <Gallery items={events} />
         
       </div>
-      <div>
+      {/* <div>
       <h1>OpenLayers Map Example</h1>
       <OpenLayersMap latitude={latitude} longitude={longitude} />
-    </div>
+    </div> */}
     </div>
   );
 };
