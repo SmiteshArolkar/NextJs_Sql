@@ -45,7 +45,7 @@ const Chat = () => {
             <div className='flex justify-center mr-28   mb-4   '>
         <div className="w-28  mx-2 h-0 border border-[#6979f8] "></div>
         </div>
-            <div className='w-3/4 mx-auto border-2 p-4 rounded-lg  my-12 grid lg:grid-cols-4 bg-white  gap-8'>
+            <div className='w-3/4 mx-auto border-2 p-4 rounded-lg  my-12 grid lg:grid-cols-2 bg-white  gap-8'>
               {
                 // chat && chat.map((doc) => (
                 //   <div>

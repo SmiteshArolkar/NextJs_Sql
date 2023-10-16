@@ -348,9 +348,11 @@ const CartList = () => {
           </div>
         ))}
         
-        {
+    
+      </div>
+      {
           activeTab === "accepted"  &&  (
-            <div>
+            <div className=" grid grid-cols-3 gap-4">
               {
                 acceptedDocs && acceptedDocs.map((doc,index) => (<div
                 key={index}
@@ -412,7 +414,7 @@ const CartList = () => {
         }
            {
           activeTab === "approved" && (
-            <div>
+            <div className="grid grid-cols-3">
               {
                 approvedDocs && approvedDocs.map((doc) => (<div>
                    <>
@@ -469,7 +471,6 @@ const CartList = () => {
             </div>
           )
         }
-      </div>
     </div>
   );
 };

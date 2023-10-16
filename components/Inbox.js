@@ -5,7 +5,7 @@ const Inbox = ({ messages }) => {
     <div className=" border-2 p-4 rounded-lg shadow-xl bg-[#6979f8]  lg:hover:scale-125 duration-300 gap-">
       <div className="">
         <div className=" w-full mx-auto text-center   text-xl grid">
-          <div className=" rounded-lg text-center font-bold  mx-2 my-2">
+          <div className=" rounded-lg text-left font-bold  mx-2 my-2  ">
             { "> " + messages.sender}
           </div>
           <p className="text-left text-white mx-2">Event : {messages.event}<br></br>
