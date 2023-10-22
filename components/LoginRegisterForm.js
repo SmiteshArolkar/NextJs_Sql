@@ -75,7 +75,7 @@ const LoginForm = () => {
 
     console.log(email,name,phone,city,state,address,password)
     setLoading(true)
-    if (email && name && phone && city && state && address && password && phone.lenght) {
+    if (email && name && phone && city && state && address && password && phone.length == 10) {
       
       const data = {
         email: email,

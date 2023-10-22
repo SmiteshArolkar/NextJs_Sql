@@ -2,6 +2,7 @@ import { AuthContext, ResetPassword, SignOut } from "@/Context/AuthContext";
 import Error from "@/components/Error";
 import Loader from "@/components/Loader";
 import Popup from "@/components/LoginPopUp";
+import Success from "@/components/Success";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -21,6 +22,9 @@ const Settings = () => {
   const [resetPss,setResetPss] = useState(false)
   const [m_error,setMError] = useState("")
   const router = useRouter()
+  const [err,setError] = useState("")
+  const [success,setSuccess] = useState("")
+
 
 
   const ToggleChangeMode = () => {
@@ -81,6 +85,9 @@ const Settings = () => {
         })
       }).catch((e) => {
         setMError(e)
+        setTimeout(() => {
+          setError("")
+        },3000)
       })
     }
     setLoading(false)
@@ -92,6 +99,7 @@ const Settings = () => {
   const handleSave = () => {
     // Perform actions to save the updated settings
     // This can include making API calls or updating a database
+    setLoading(true)
 
     console.log("Settings saved:", {
       name,
@@ -101,6 +109,39 @@ const Settings = () => {
       city,
       state,
     });
+
+    const data = {
+      name,
+      phoneNumber,
+      email,
+      address,
+      city,
+      state,
+    }
+
+    axios.post("/api/UpdateSettings",data).then((response) => {
+      if(response)
+      {
+        console.log(response)
+        setLoading(false)
+        setSuccess("Profile Updated")
+        setTimeout(() => {
+          setSuccess("")
+        },3000)        
+
+      }
+      else {
+        setLoading(false)
+        setError("Failed to Update Profile")
+        setTimeout(() => {
+          setError("")
+        },3000)
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+      setError(e.message)
+    })
   };
 
   return (
@@ -175,7 +216,20 @@ const Settings = () => {
             onClick={handleSave}
           >
             Update Details
+
           </button>
+
+          {
+            isLoading && <Loader></Loader>
+          }
+
+          {
+            success && <Success message={success}></Success>
+          }
+
+          {
+            err && <Error message={err}></Error>
+          }
 
           
           </div>
