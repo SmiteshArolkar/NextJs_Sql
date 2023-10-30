@@ -1,7 +1,12 @@
 import React, { useContext, useState } from "react";
 import Loader from "./Loader";
 import Error from "./Error";
-import { AuthContext, SignIn, SignInWithPass, SignUp } from "@/Context/AuthContext";
+import {
+  AuthContext,
+  SignIn,
+  SignInWithPass,
+  SignUp,
+} from "@/Context/AuthContext";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Success from "./Success";
@@ -11,7 +16,7 @@ const LoginForm = () => {
   const [Login, setLogin] = useState(true);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [isSuccess,setSuccess] = useState("")
+  const [isSuccess, setSuccess] = useState("");
   const router = useRouter();
 
   const validateEmail = (email) => {
@@ -42,25 +47,29 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    const email = document.getElementById("email").value
-    if(activeTab == "user")
-    {
+    const email = document.getElementById("email").value;
+    if (activeTab == "user") {
       console.log(email);
-    const result = await SignIn(email);
-    if (result) setError(result);
-    else 
-    setSuccess("Email Sent Successfully")
+      const result = await SignIn(email);
+      if (result) {
+        setError(result);
+        setTimeout(() => {
+          setError("");
+        }, 3000);
+      } else setSuccess("Email Sent Successfully");
+    } else {
+      const password = document.getElementById("password").value;
+      const result = await SignInWithPass(email, password);
+      if (result) {
+        setError(result);
+        setTimeout(() => {
+          setError("");
+        }, 3000);
+      } else setSuccess("Login Successfully Return to home");
+      router.replace("/");
     }
-    else
-     {
-      const password = document.getElementById("password").value
-      const result = await SignInWithPass(email,password)
-      if(result) setError(result)
-      else  setSuccess("Login Successfully Return to home")
-    router.replace("/")
-     }
-    
-    setLoading(false)
+
+    setLoading(false);
   };
 
   const handleRegister = async () => {
@@ -71,12 +80,20 @@ const LoginForm = () => {
     const city = document.getElementById("city").value;
     const state = document.getElementById("state").value;
     const address = document.getElementById("address").value;
-    const password = document.getElementById("password").value
+    const password = document.getElementById("password").value;
 
-    console.log(email,name,phone,city,state,address,password)
-    setLoading(true)
-    if (email && name && phone && city && state && address && password && phone.length == 10) {
-      
+    console.log(email, name, phone, city, state, address, password);
+    setLoading(true);
+    if (
+      email &&
+      name &&
+      phone &&
+      city &&
+      state &&
+      address &&
+      password &&
+      phone.length == 10
+    ) {
       const data = {
         email: email,
         phone: phone,
@@ -86,39 +103,49 @@ const LoginForm = () => {
         role: activeTab,
         name: name,
       };
-      console.log(data)
-      
-       SignUp(email,password).then((result) => {
-        console.log(result)
-        
-        axios.post("/api/registerUser",data).then((response) => {
-          console.log(response)
-          if(response.data.status === "success"){
-            
-            setLoading(false)
-            setSuccess("User Registered Successfully")
-            router.reload()
-          }
-          else
-          {
-            setError(response.data.message.sqlMessage)
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-          setError(error.message)
-        })
-      
-      }).catch((e) => {
-        setError(e.message)
-      })
+      console.log(data);
 
-      
-      
-    } else setError("incomplete field");
-  
+      SignUp(email, password)
+        .then((result) => {
+          console.log(result);
 
-    setLoading(false)
+          axios
+            .post("/api/registerUser", data)
+            .then((response) => {
+              console.log(response);
+              if (response.data.status === "success") {
+                setLoading(false);
+                setSuccess("User Registered Successfully");
+                router.reload();
+              } else {
+                setError(response.data.message.sqlMessage);
+                setTimeout(() => {
+                  setError("");
+                }, 3000);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              setError(error.message);
+              setTimeout(() => {
+                setError("");
+              }, 3000);
+            });
+        })
+        .catch((e) => {
+          setError(e.message);
+          setTimeout(() => {
+            setError("");
+          }, 3000);
+        });
+    } else {
+      setError("incomplete field");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
+
+    setLoading(false);
   };
 
   const handleTabChange = (tab) => {
@@ -140,7 +167,9 @@ const LoginForm = () => {
             </button>
             <button
               className={`flex-1 p-2 text-center rounded-se-md ${
-                activeTab === "admin" ? "bg-[#6979F8] text-white" : "bg-gray-300"
+                activeTab === "admin"
+                  ? "bg-[#6979F8] text-white"
+                  : "bg-gray-300"
               }`}
               onClick={() => handleTabChange("admin")}
             >
@@ -162,31 +191,32 @@ const LoginForm = () => {
                 placeholder="example@exp.com"
                 id="email"
               />
-              {
-                activeTab == "admin" ? <div>
-                   <label className="block text-gray-700 text-sm font-bold mb-2 my-2">
-                Password
-              </label>
-              <input
-                type="password"
-                className="appearance-none border rounded duration-500  focus:border-[#6979f8] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="*******"
-                id="password"
-              />
-                </div> : <></>
-              }
+              {activeTab == "admin" ? (
+                <div>
+                  <label className="block text-gray-700 text-sm font-bold mb-2 my-2">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="appearance-none border rounded duration-500  focus:border-[#6979f8] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="*******"
+                    id="password"
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="flex items-center  justify-between">
               <button
                 className="bg-[#6979F8] hover:bg-[#4d61fb] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button" 
+                type="button"
                 onClick={handleLogin}
               >
-                {activeTab === "user" ? "Send Email Link" : "Login"} 
+                {activeTab === "user" ? "Send Email Link" : "Login"}
               </button>
               {isLoading && <Loader></Loader>}
-              <div>
-              </div>
+              <div></div>
             </div>
           </form>
           {error && <Error message={error}></Error>}
@@ -197,7 +227,8 @@ const LoginForm = () => {
               setLogin(!Login);
             }}
           >
-            Don't have a Account ? <span className="text-[#6979f8]"> Register here </span>
+            Don't have a Account ?{" "}
+            <span className="text-[#6979f8]"> Register here </span>
           </button>
         </div>
       </div>
@@ -253,7 +284,6 @@ const LoginForm = () => {
                   id="password"
                 />
               </div>
-              
 
               <div className="mb-4">
                 <label className="block text-gray-700  border-gray-400 text-sm font-bold mb-2">
@@ -314,10 +344,8 @@ const LoginForm = () => {
                   id="address"
                 />
               </div>
-              
-              <div className="m-2 font-semibold">
-               
-              </div>
+
+              <div className="m-2 font-semibold"></div>
               <div className="flex items-center gap-20   col-span-2 justify-center ">
                 <button
                   className="bg-[#6979f8] w-1/2 py-3 hover:bg-[#4056fd] duration-300 text-white border-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -331,7 +359,7 @@ const LoginForm = () => {
                 {isLoading && <Loader></Loader>}
               </div>
             </form>
-            
+
             {error && <Error message={error}></Error>}
             {isSuccess && <Success message={isSuccess}></Success>}
             <button
@@ -340,7 +368,8 @@ const LoginForm = () => {
                 setLogin(!Login);
               }}
             >
-              Already have a Account ?<span className="text-[#6979f8]"> Click here</span> 
+              Already have a Account ?
+              <span className="text-[#6979f8]"> Click here</span>
             </button>
           </div>
         </div>
