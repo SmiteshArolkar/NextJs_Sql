@@ -29,9 +29,11 @@ const EventRegistrationForm = ({ EventID }) => {
 const [days,setDays] = useState(0)
 const [email,setEmail] = useState("")
 const [phone,setPhone] = useState("")
+const [latLong,setLatLong] = useState([])
 
-const handleAddressChange = (address) => {
+const handleAddressChange = (address,latlong) => {
   setAddress(address)
+  setLatLong(latlong)
   console.log(address)
 }
 
@@ -121,7 +123,9 @@ const [isLoading,setLoading] = useState(false)
       address:address,
       email:email,
       phone:phone,
-      status:"pending"
+      status:"pending",
+      lat:latLong[1],
+      long:latLong[0]
     }
 
     const res = await axios.post("/api/sendRequest",data).then((response) => {

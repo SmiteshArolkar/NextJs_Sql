@@ -36,7 +36,7 @@ const Test = ({handleAddressChange,setLat}) => {
 
     setSuggestions([]);
     setSelectedLocation(suggestion.properties.formatted);
-    handleAddressChange(suggestion.properties.formatted)
+    handleAddressChange(suggestion.properties.formatted,latLong)
     console.log('Selected Location:', suggestion.properties.formatted);
   };
 
