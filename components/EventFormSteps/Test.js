@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import Map from './Map/GoogleMap';
 
-const Test = ({handleAddressChange}) => {
+const Test = ({handleAddressChange,setLat}) => {
   const [location, setLocation] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [latLong,SetLatLong] = useState([])
 
   const handleInputChange = async (event) => {
     const inputValue = event.target.value;
@@ -29,6 +31,9 @@ const Test = ({handleAddressChange}) => {
 
   const handleSuggestionClick = (suggestion) => {
     setLocation(suggestion.properties.formatted);
+    console.log(suggestion.geometry.coordinates)
+    SetLatLong(suggestion.geometry.coordinates)
+
     setSuggestions([]);
     setSelectedLocation(suggestion.properties.formatted);
     handleAddressChange(suggestion.properties.formatted)
@@ -36,8 +41,17 @@ const Test = ({handleAddressChange}) => {
   };
 
   return (
-    <div className="w-full  my-2 mx-auto">
-    
+    <div className={`w-full grid  ${latLong[1] ? "grid-col-2" : "grid-cols-1"}my-2 mx-auto`}>
+      <div>
+      {
+      latLong[0] && latLong[1] && (
+        <div className='p-4'>
+             <Map apiKey={"AIzaSyDMRTjPWNEUp8J81tzfAw5lhcJQK50oKr0"} latitude={latLong[1]} longitude={latLong[0]}></Map>
+        </div>
+     
+      )
+     }
+      </div>
       <div className="relative">
         <input
           type="text"
@@ -60,8 +74,11 @@ const Test = ({handleAddressChange}) => {
           </ul>
         )}
       </div>
+
+
     </div>
   );
 };
+
 
 export default Test;

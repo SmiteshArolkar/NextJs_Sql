@@ -6,6 +6,7 @@ import Success from "@/components/Success";
 import { storage } from "@/lib/firebase";
 import axios from "axios";
 import React, { useContext, useState } from "react";
+import EditEvent from "./components/EditEvent";
 
 const Index = () => {
   const [e_m, setEm] = useState("");
@@ -87,7 +88,10 @@ const Index = () => {
   };
 
   return (
-    <div className="text-black pt-10 grid lg:grid-cols-2 w-3/4 mx-auto">
+    <div className="w-3/4 mx-auto">
+
+
+    <div className="text-black pt-10 grid lg:grid-cols-2 o">
       <div className=" grid gap-4 ">
         <h1 className=" font-bold text-2xl ">
           Add an Event
@@ -164,6 +168,9 @@ const Index = () => {
           <AdminUserList></AdminUserList>
         </div>
       </div>
+     
+    </div>
+    <EditEvent></EditEvent>
     </div>
   );
 };
