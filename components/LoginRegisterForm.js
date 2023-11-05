@@ -116,7 +116,12 @@ const LoginForm = () => {
               if (response.data.status === "success") {
                 setLoading(false);
                 setSuccess("User Registered Successfully");
-                router.reload();
+                setTimeout(() => {
+                  setSuccess("Conform your email")
+                  setTimeout(() => {
+                    setSuccess("")
+                  }, 3000);
+                }, 3000);
               } else {
                 setError(response.data.message.sqlMessage);
                 setTimeout(() => {
@@ -215,10 +220,11 @@ const LoginForm = () => {
               >
                 {activeTab === "user" ? "Send Email Link" : "Login"}
               </button>
-              {isLoading && <Loader></Loader>}
+              
               <div></div>
             </div>
           </form>
+          {isLoading && <Loader></Loader>}
           {error && <Error message={error}></Error>}
           {isSuccess && <Success message={isSuccess}></Success>}
           <button

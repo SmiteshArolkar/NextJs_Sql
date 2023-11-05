@@ -7,6 +7,9 @@ const Inbox = ({ messages }) => {
         <div className=" w-full mx-auto text-center   text-xl grid">
           <div className=" rounded-lg text-left font-bold  mx-2 my-2  ">
             { "> " + messages.sender}
+            <div>
+              
+            </div>
           </div>
           <p className="text-left text-white mx-2">Event : {messages.event}<br></br>
           Event ID : {messages.requestid}

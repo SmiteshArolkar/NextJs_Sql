@@ -170,7 +170,7 @@ const Index = () => {
       </div>
      
     </div>
-    <EditEvent></EditEvent>
+    {/* <EditEvent></EditEvent> */}
     </div>
   );
 };

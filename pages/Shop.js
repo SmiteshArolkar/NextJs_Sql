@@ -24,6 +24,7 @@ const AccordionList = () => {
       {
         alert("Request Approved")
         router.reload()
+      
         
       } else {
         alert("Failed to Approve Request")
@@ -81,7 +82,7 @@ const AccordionList = () => {
      
       <div className="space-y-8 bg-white p-4 rounded-lg grid duration-500 shadow-xl text-slate-900">
         {accordionItems.map((item, index) => (
-          <div key={item.id} className=" text-white border-2 p-2  bg-[#6979f8] lg:hover:scale-110 duration-500  rounded-xl">
+          <div key={item.id} className=" text-white border-2 p-2  bg-[#6979f8]  duration-500  rounded-xl">
             <button
               className="w-full text-left p-3"
               onClick={() => toggleAccordion(index)}
@@ -99,7 +100,7 @@ const AccordionList = () => {
               
             </button>
             {activeIndex === index && (
-              <div className="p-3 grid grid-cols-1  text-white">
+              <div className="p-3     text-white">
                 <div>
                 Contact : {item.email}<br></br>
                 <div className="text-white my-2 flex gap-2">
@@ -107,15 +108,15 @@ const AccordionList = () => {
              <p className="my-2">-</p>
              <input type="date"  disabled className=" rounded-md   flex  text-black  " value={item.enddate.slice(0,10)}></input>
                 </div>
-                <button className="bg-white w-1/3 flex  justify-center  text-black rounded p-2 m-2 text-center" >
-                  <div onClick={() => {
+                <div className="" >
+                  <button className='bg-white my-4  flex  justify-center hover:scale-90 duration-300 hover:bg-[black] hover:text-white  text-black rounded p-2  text-center' onClick={() => {
                     handleApproveRequest(item.requestid)
                   }}>
 
                   Accept Request
-                  </div>
+                  </button>
                  
-                </button>
+                </div>
                 </div>
 
              

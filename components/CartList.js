@@ -23,12 +23,12 @@ const CartList = () => {
     setActiveTab(tab);
   };
 
-  const handleSendMessage = (doc) => {
+  const handleSendMessage = (doc,id) => {
     if(userDetails)
     {
       setLoading(true)
     const event = doc.eventid
-    const message = document.getElementById("message") ? document.getElementById("message").value : null
+    const message = document.getElementById(id) ? document.getElementById(id).value : null
     const receiver = activeTab == "approved" ? doc.supplier : doc.user
     const requestid = doc.requestid
     const sender = userDetails.email
@@ -387,7 +387,7 @@ const CartList = () => {
                       </div>
                       <div className="mx-4 flex flex-col gap-4">
                       <textarea
-                        id="message"
+                        id={`message-${index}`}
                         placeholder="message"
                         type="text"
                         className="px-2 text-black w-full border-2 border-blue-300 rounded-lg  lg:hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
@@ -395,7 +395,7 @@ const CartList = () => {
                       <button className="border-2 mb-2 p-2 rounded-lg bg-white text-black  hover:text-white hover:bg-blue-400 duration-300 "
                       onClick={(e) => {
                        
-                        handleSendMessage(doc)
+                        handleSendMessage(doc,`message-${index}`)
                       }}
                       >
                         Send message
@@ -416,9 +416,9 @@ const CartList = () => {
           activeTab === "approved" && (
             <div className="grid grid-cols-3">
               {
-                approvedDocs && approvedDocs.map((doc) => (<div>
+                approvedDocs && approvedDocs.map((doc,index) => (<div>
                    <>
-                  <div className="border-2 rounded-xl p-2 bg-[#6979f8] shadow-xl text-white shadow flex gap-2 justify-between">
+                  <div key={index} className="border-2 rounded-xl p-2 bg-[#6979f8] shadow-xl text-white shadow flex gap-2 justify-between">
                  
                     <div className="grid lg:grid-cols-1 p-3">
                     <h3 className="text-white font-semibold">{doc.eventid}</h3>
@@ -442,14 +442,14 @@ const CartList = () => {
                       </div>
                       <div className="mx-4 flex flex-col gap-4 m-3">
                       <textarea
-                      id="message"
+                      id={`message-${index}`}
                         placeholder="message"
                         type="text"
                         className="px-2 border-2 text-black border-blue-300 w-full rounded-lg  lg:hover:scale-150 w-1/2 hover:-translate-x-12 duration-300"
                       ></textarea>
                       <button className="border-2 p-2 rounded-lg bg-white text-black  hover:bg-[#272c4d] hover:text-white duration-300 "
                      onClick={(e) => {
-                      handleSendMessage(doc)
+                      handleSendMessage(doc,`message-${index}`)
                     }}
                       >
                         Send message

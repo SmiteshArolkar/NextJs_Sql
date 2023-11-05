@@ -1,8 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Index from "..";
 
 const EditEvent = ({}) => {
   const [events, setEvents] = useState(null);
+  const [e_m, setEm] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [success,setSuccess] = useState(false)
+  const [active_index,setIndex] = useState(0)
 
   useEffect(() => {
     axios
@@ -15,6 +20,89 @@ const EditEvent = ({}) => {
         console.log(err);
       });
   }, []);
+
+  const handleSubmit = (doc,id) => {
+    setIndex(id)
+    const title = document.getElementById("title-"+id)
+      ? document.getElementById("title-"+id).value
+      : "";
+    const description = document.getElementById("desc-"+id)
+      ? document.getElementById("desc-"+id).value
+      : "";
+    const content = document.getElementById("cont-"+id)
+      ? document.getElementById("cont-"+id).value
+      : "";
+    const image = document.getElementById("img-"+id)
+      ? document.getElementById("img-"+id)
+      : "";
+    let url = "";
+
+    if (title && description && content && image) {
+        setLoading(true);
+      const upload = image.files[0];
+      const storage_ref = storage.ref("/uploads/" + upload.name);
+
+      const task = storage_ref.put(upload);
+      task.on(
+        "state_changed",
+        function (snapshot) {
+          //in progress
+        },
+        function (error) {
+          //error
+          setEm("Image Upload Failed : " + error);
+          setIndex(id)
+          setTimeout(() => {
+            setEm("")
+            setIndex(0)
+          },3000)
+          setLoading(false);
+        },
+        function () {
+          //complete
+          task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log("File available at", downloadURL);
+            url = downloadURL;
+            const data = {
+              id:doc.title,
+              adminid: userDetails ? userDetails.email : "admin",
+              title: title,
+              description: description,
+              content: content,
+              imageUrl: url,
+            };
+
+            axios.post("/api/updateEvent", data).then((response) => {
+              console.log(response);
+              setLoading(false);
+              if (response.data.status === "success") {
+                setSuccess("Event Added Successfully");
+                setIndex(id)
+                console.log(response);
+                setTimeout(() => {
+                  setSuccess("");
+                  setIndex(0)
+                }, 2000);
+              } else {
+                setEm("Error Occured");
+                console.log(response);
+                setTimeout(() => {
+                  setEm("");
+                }, 2000);
+              }
+            });
+          });
+        }
+      );
+    } else {
+      setEm("Invalid Fields");
+      setTimeout(() => {
+        setEm("");
+      }, 2000);
+    }
+  
+
+  }
 
   return (
     <div className=" my-10">
@@ -41,7 +129,7 @@ const EditEvent = ({}) => {
   <div className="bg-[#6979f9] text-white w-max  p-2 rounded-t-lg py-0">
   Image
   </div>
-  <input type="file" className="border rounded-b-lg p-2 w-full" >
+  <input type="file" className="border rounded-b-lg p-2 w-full" id={`img-${index}`} >
    
   </input>
 </div>
@@ -52,7 +140,7 @@ const EditEvent = ({}) => {
   <div className="bg-[#6979f9] text-white w-max  p-2 rounded-t-lg py-0">
     Title 
   </div>
-  <input className="border rounded-b-lg p-2 w-full" placeholder= {doc.title} >
+  <input className="border rounded-b-lg p-2 w-full" placeholder= {doc.title} id={`title-${index}`} >
    
   </input>
 </div>
@@ -60,7 +148,7 @@ const EditEvent = ({}) => {
   <div className="bg-[#6979f9] text-white w-max  p-2 rounded-t-lg py-0">
     Description 
   </div>
-  <textarea className="border rounded-b-lg p-2 w-full" placeholder= {doc.description} >
+  <textarea className="border rounded-b-lg p-2 w-full" placeholder= {doc.description} id={ `desc-${index}`} >
    
   </textarea>
 </div>
@@ -68,14 +156,18 @@ const EditEvent = ({}) => {
   <div className="bg-[#6979f9] text-white w-max  p-2 rounded-t-lg py-0">
     Content
   </div>
-  <textarea className="border rounded-b-lg p-2 w-full" placeholder= {doc.content} rows={3} >
+  <textarea className="border rounded-b-lg p-2 w-full" placeholder= {doc.content} rows={3}  id={ `cont-${index}`} >
    
   </textarea>
 </div>
 
-<button className="p-2 bg-[#6979f8] text-white m-4 text-center w-4/6 rounded-lg mx-10 ">
+<button className="p-2 bg-[#6979f8] text-white m-4 text-center w-4/6 rounded-lg mx-10 " onClick={() => {
+  
+}}>
   Submit
 </button>
+
+
 
 </div>
 
