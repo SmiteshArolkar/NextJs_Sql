@@ -42,8 +42,13 @@ const Gallery = ({ items }) => {
         </Popup>
         {items.map((item, index) => (
           <div key={index}>
-            <div className="bg-[#6979f8] text-white rounded-xl m-4 py-5 px-2 border-2 shadow shadow-[black] hover:scale-110 duration-300 ">
+            <div className="bg-[#6979f8] bg-cover w-full h-96  text-white rounded-xl m-4 py-5 px-2 border-2 shadow shadow-[black] hover:scale-110 duration-300 "
+            style={{
+              backgroundImage : `url('${item.imageUrl}')`
+            }}
+            >
               <div
+              className=""
                 onClick={() => {
                   if (currentUser) {
                     router.push(`Events/${item.title}`);
@@ -56,16 +61,16 @@ const Gallery = ({ items }) => {
                   key={index}
                   className=" bg-yellow-500 rounded-lg shadow-md  cursor-pointer mx-2 hover:scale-100 duration-300"
                 >
-                <Suspense  fallback={<div>...isLoading</div>}>
+                {/* <Suspense  fallback={<div>...isLoading</div>}>
                 <img
                     src={item.imageUrl}
                     alt={item.title}
-                    className="w-full h-full object-cover mb-2 rounded-md"
+                    className="w-full h-full object-cover mb-2 rounded-md  "
                   />
-                </Suspense>
+                </Suspense> */}
                 </div>
-                <div className="rounded-lg   cursor-pointer mx-2 ">
-                  <h3 className="text-white font-semibold text-xl sm:text-base p-2">
+                <div className="rounded-lg   cursor-pointer mx-2  my-4">
+                  <h3 className=" rounded-lg w-max font-semibold text-xl sm:text-base p-2 bg-white text-black">
                     {item.title}
                   </h3>
                   <p className="text-white text-xs sm:text-sm py-3">
@@ -74,7 +79,7 @@ const Gallery = ({ items }) => {
                 </div>
               </div>
               <div
-                className="text-center text-white hover:text-blue hover:text-black hover:scale-105  duration-150"
+                className="text-center   rounded p-2 m-2 text-white hover:text-blue hover:text-black hover:scale-105  duration-150"
                 onMouseOver={() => {
                   document
                     .getElementById("card-" + item.title)
@@ -88,7 +93,7 @@ const Gallery = ({ items }) => {
               >
                 View Details
                 <div id={"card-" + item.title} className="hidden  ">
-                  <div className="absolute m-3 p-4 mt-2 bg-yellow-300 text-black border duration-700 rounded-md  transform scale-95 origin-top transition  ease-in-out group-hover:scale-100">
+                  <div className="absolute m-3 p-4 mt-2 bg-[#6979f8] text-white border duration-700 rounded-md  transform scale-95 origin-top transition  ease-in-out group-hover:scale-100">
                     {/* Dropdown content */}
                     <h1>
                     {
