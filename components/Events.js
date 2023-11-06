@@ -73,13 +73,10 @@ const Gallery = ({ items }) => {
                   <h3 className=" rounded-lg w-max font-semibold text-xl sm:text-base p-2 bg-white text-black">
                     {item.title}
                   </h3>
-                  <p className="text-white text-xs sm:text-sm py-3">
+                  <p className=" rounded-lg p-2 text-xs sm:text-sm py-3 mt-44 bg-white text-black">
                     {item.description}
-                  </p>
-                </div>
-              </div>
-              <div
-                className="text-center   rounded p-2 m-2 text-white hover:text-blue hover:text-black hover:scale-105  duration-150"
+                    <div
+                className="text-center   rounded p-2 m-2 text-[#6979f8] underline hover:text-blue hover:text-black hover:scale-105  duration-150"
                 onMouseOver={() => {
                   document
                     .getElementById("card-" + item.title)
@@ -103,6 +100,10 @@ const Gallery = ({ items }) => {
                   </div>
                 </div>
               </div>
+                  </p>
+                </div>
+              </div>
+             
             </div>
           </div>
         ))}
