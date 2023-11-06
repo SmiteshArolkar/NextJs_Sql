@@ -69,11 +69,11 @@ const Gallery = ({ items }) => {
                   />
                 </Suspense> */}
                 </div>
-                <div className="rounded-lg   cursor-pointer mx-2  my-4">
+                <div className="rounded-lg   cursor-pointer mx-2  my-4 ">
                   <h3 className=" rounded-lg w-max font-semibold text-xl sm:text-base p-2 bg-white text-black">
                     {item.title}
                   </h3>
-                  <p className=" rounded-lg p-2 text-xs sm:text-sm py-3 mt-44 bg-white text-black">
+                  <p className=" opacity-80 rounded-lg p-2 text-xs sm:text-sm py-3 mt-44 bg-white text-black">
                     {item.description}
                     <div
                 className="text-center   rounded p-2 m-2 text-[#6979f8] underline hover:text-blue hover:text-black hover:scale-105  duration-150"
