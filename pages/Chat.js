@@ -64,6 +64,9 @@ const Chat = () => {
                 }) : (<h1 className='text-black p-4'>No messages</h1>)
             }
             </div>
+            <div>
+              
+            </div>
         </div>
     );
 }

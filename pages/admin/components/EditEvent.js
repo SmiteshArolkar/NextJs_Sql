@@ -1,6 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Index from "..";
+import Error from "@/components/Error";
+import { storage } from "@/lib/firebase";
+import { AuthContext } from "@/Context/AuthContext";
+import { Router, useRouter } from "next/router";
 
 const EditEvent = ({}) => {
   const [events, setEvents] = useState(null);
@@ -8,6 +12,9 @@ const EditEvent = ({}) => {
   const [isLoading, setLoading] = useState(false);
   const [success,setSuccess] = useState(false)
   const [active_index,setIndex] = useState(0)
+  const router = useRouter()
+
+  const {userDetails} = useContext(AuthContext)
 
   useEffect(() => {
     axios
@@ -23,6 +30,7 @@ const EditEvent = ({}) => {
 
   const handleSubmit = (doc,id) => {
     setIndex(id)
+    console.log(id)
     const title = document.getElementById("title-"+id)
       ? document.getElementById("title-"+id).value
       : "";
@@ -36,6 +44,8 @@ const EditEvent = ({}) => {
       ? document.getElementById("img-"+id)
       : "";
     let url = "";
+
+    console.log()
 
     if (title && description && content && image) {
         setLoading(true);
@@ -64,7 +74,7 @@ const EditEvent = ({}) => {
             console.log("File available at", downloadURL);
             url = downloadURL;
             const data = {
-              id:doc.title,
+              id:doc.eventID,
               adminid: userDetails ? userDetails.email : "admin",
               title: title,
               description: description,
@@ -80,6 +90,7 @@ const EditEvent = ({}) => {
                 setIndex(id)
                 console.log(response);
                 setTimeout(() => {
+                router.reload()
                   setSuccess("");
                   setIndex(0)
                 }, 2000);
@@ -111,6 +122,9 @@ const EditEvent = ({}) => {
         <div className="w-16  mx-2 h-0 border border-[#6979f8]"></div>
       </h1>{" "}
       <div className="grid grid-cols-2 w-full gap-10 my-4  ">
+        {
+        e_m && <Error message={e_m}></Error>
+        }
         {events &&
           events.map((doc, index) => (
             <div
@@ -162,7 +176,7 @@ const EditEvent = ({}) => {
 </div>
 
 <button className="p-2 bg-[#6979f8] text-white m-4 text-center w-4/6 rounded-lg mx-10 " onClick={() => {
-  
+  handleSubmit(doc,parseInt(doc.eventID)-1)
 }}>
   Submit
 </button>
