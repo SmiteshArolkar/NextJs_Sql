@@ -8,6 +8,7 @@ const Chat = () => {
 
   const {userDetails} = useContext(AuthContext)
   const [chat,setChat] = useState([])
+  const [messageMap,setMessageMap] = useState([])
   
     const [messages, setMessages] = useState([]);
 
@@ -30,42 +31,66 @@ const Chat = () => {
               }
             })
 
+       
 
+      
+            console.log(docs)
             setChat(
               chatDocs
             )
             setMessages(docs)
+
           })
         }
       },[])
+
+      const filterMessage = (sender,messages) => {
+        const docs = messages.map((message) => {
+        if(message.sender === sender)
+        return message
+        })
+     
+        setMessageMap(docs)
+      }
     return (
         <div className='mt-12'>
             <div className='text-center font-bold text-3xl'>
                 <h1>MESSAGE-BOX</h1>
-                
+               
             </div>
             <div className='flex justify-center mr-28   mb-4   '>
         <div className="w-28  mx-2 h-0 border border-[#6979f8] "></div>
         </div>
-            <div className='w-3/4 mx-auto border-2 p-4 rounded-lg  my-12 grid lg:grid-cols-3 bg-white  gap-8'>
+          
+            <div className='grid grid-cols-4 w-3/4 mx-auto'>
+
+             <div className=' col-span-1  my-10'>
               {
-                // chat && chat.map((doc) => (
-                //   <div>
-                    
-                //   </div>
-                // ))
+                chat ? chat.map((doc) => (
+                  <button className='bg-[#6979f8] border-2 rounded-md w-full   border-white  text-white p-2  hover:scale-110 duration-500    ' onClick={() => {
+                    filterMessage(doc,messages)
+                  }}>
+                    {doc}
+                  </button>
+                )) : <div>No messages</div>
               }
+             </div>
+            <div className=' col-span-3 grid gap-4 max-h-3/4 w-full  p-20  py-10  overflow-y-scroll'>
             {
-                messages.length ? messages.map((message) => {
-                    return (
-                        
-                        <Inbox key={message.id} messages={message}></Inbox>
-                    )
-                }) : (<h1 className='text-black p-4'>No messages</h1>)
-            }
+              messageMap.length != 0 && messageMap.map((doc) => (
+                <div>
+                   {
+               doc && (
+                <Inbox key={doc.id} messages={doc}></Inbox>
+               )
+                   }
+                </div>
+              ))
+             }
+             {
+              !messageMap && (<div>No messages</div>)
+             }
             </div>
-            <div>
-              
             </div>
         </div>
     );

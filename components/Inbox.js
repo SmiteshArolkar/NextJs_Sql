@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Inbox = ({ messages }) => {
   return (
-    <div className=" border-2 p-4 rounded-lg shadow-xl bg-[#6979f8]  lg:hover:scale-125 duration-300 gap-">
+    <div className=" border-2 p-4 rounded-lg shadow-xl bg-[#6979f8]  lg:hover:scale-110 duration-300 gap-">
       <div className="">
         <div className=" w-full mx-auto text-center   text-xl grid">
           <div className=" rounded-lg text-left font-bold  mx-2 my-2  ">
