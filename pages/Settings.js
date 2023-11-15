@@ -1,8 +1,10 @@
 import { AuthContext, ResetPassword, SignOut } from "@/Context/AuthContext";
+import ChangePhoto from "@/components/ChangePhoto";
 import Error from "@/components/Error";
 import Loader from "@/components/Loader";
 import Popup from "@/components/LoginPopUp";
 import Success from "@/components/Success";
+import { storage } from "@/lib/firebase";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -24,6 +26,7 @@ const Settings = () => {
   const router = useRouter()
   const [err,setError] = useState("")
   const [success,setSuccess] = useState("")
+  const [photo,setPhoto] = useState("")
 
 
 
@@ -39,6 +42,7 @@ const Settings = () => {
       setAddress(userDetails.address);
       setCity(userDetails.city);
       setState(userDetails.state);
+      setPhoto(userDetails.photo)
     }
   }, []);
 
@@ -101,6 +105,10 @@ const Settings = () => {
     // This can include making API calls or updating a database
     setLoading(true)
 
+    const image = document.getElementById("img")
+    ? document.getElementById("img")
+    : "";
+
     console.log("Settings saved:", {
       name,
       phoneNumber,
@@ -109,7 +117,55 @@ const Settings = () => {
       city,
       state,
     });
+    let url = ""
+    if(image && image.files[0])
+    {
+      setLoading(true)
+      console.log(image.files[0])
+      const upload = image.files[0];
+      const storage_ref = storage.ref("/uploads/users/" + upload.name);
 
+      const task = storage_ref.put(upload);
+      task.on(
+        "state_changed",
+        
+        function (snapshot) {
+          setLoading(true)
+          console.log("Progress")
+          //in progress
+        },
+        function (error) {
+          //error
+          setEm("Image Upload Failed : " + error);
+   
+          setTimeout(() => {
+            setEm("")
+            setIndex(0)
+          },3000)
+       
+        },
+        function () {
+          //complete
+          task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log("File available at", downloadURL);
+            url = downloadURL;
+            const data1 = {
+              email : userDetails.email,
+              photo : url
+            }
+            axios.post("api/updatePhoto",data1).then((response) => {
+              console.log(response)
+              setLoading(false)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+          });
+        }
+      );
+    }
+
+    console.log(url)
     const data = {
       name,
       phoneNumber,
@@ -117,8 +173,10 @@ const Settings = () => {
       address,
       city,
       state,
+      photo : url,
     }
 
+   
     axios.post("/api/UpdateSettings",data).then((response) => {
       if(response)
       {
@@ -153,7 +211,7 @@ const Settings = () => {
       <div className=" border-2  bg-white mt-10 rounded-lg p-3 w-3/4 mx-auto h-3/4  ">
         <div className="p-4">
           <h1 className="text-2xl font-semibold mb-4   ">Edit Details</h1>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div>
               <label className="block font-semibold mb-2">Name</label>
               <input
@@ -200,6 +258,7 @@ const Settings = () => {
                 onChange={(e) => setCity(e.target.value)}
               />
             </div>
+            
             <div>
               <label className="block font-semibold mb-2">State</label>
               <input
@@ -209,6 +268,17 @@ const Settings = () => {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
+
+            <div className="flex">
+              <ChangePhoto photo={photo}></ChangePhoto>
+              <div className="my-4 font-bold grid">
+        <h1>Update Photo </h1>
+        <input type="file" className="border rounded-b-lg p-2  w-full" id={`img`} >
+   
+  </input>
+    </div>
+            </div>
+            
           </div>
           <div className=" justify-between flex">
           <button
